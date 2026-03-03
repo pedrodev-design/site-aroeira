@@ -685,11 +685,7 @@
   </a>
 
   <script>
-    // Cursor
-    const glass = document.getElementById('cursor-glass');
-    window.addEventListener('mousemove', (e) => {
-      gsap.to(glass, { x: e.clientX, y: e.clientY, duration: 0.8, ease: "power3.out" });
-    });
+   
 
     // Tilt só em desktop
     const isDesktop = window.matchMedia('(min-width: 768px)').matches;
