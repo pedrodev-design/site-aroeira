@@ -528,9 +528,7 @@
                 <div class="thumb" data-full="/img/6.jpg" data-label="Detalhe">
                   <img src="/img/6.jpg" alt="Detalhe"><div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
                 </div>
-                <div class="thumb" data-full="/img/7.jpg" data-label="Detalhe">
-                  <img src="/img/7.jpg" alt="Detalhe"><div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
-                </div>
+                
                 <div class="thumb" data-full="/img/8.jpg" data-label="Detalhe">
                   <img src="/img/8.jpg" alt="Detalhe"><div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
                 </div>
@@ -613,7 +611,7 @@
                   </div>
 
                   <div class="video-controls">
-                    <div class="video-meta">Tour • Estância Aroeira</div>
+                    <div class="video-meta" id="videoMeta">Tour • Estância Aroeira</div>
                     <div class="video-mini">
                       <button id="btnPlayPause" class="icon-btn" type="button">
                         <i class="fa-solid fa-play"></i> Play
@@ -623,6 +621,14 @@
                       </button>
                     </div>
                   </div>
+
+                  <!-- vídeo selector -->
+                  <div class="video-selector flex gap-2 mt-2" id="videoSelector">
+                    <button class="icon-btn video-switch" data-src="/videos/1.mp4" data-label="1">1</button>
+                    <button class="icon-btn video-switch" data-src="/videos/2.mp4" data-label="2">2</button>
+                    <button class="icon-btn video-switch" data-src="/videos/3.mp4" data-label="3">3</button>
+                  </div>
+
                 </div>
 
                 <div class="divider"></div>
@@ -677,7 +683,7 @@
   </div>
 
   <a class="floating-wa"
-     href="https://wa.me/6294514112?text=Ol%C3%A1%2C%20quero%20informa%C3%A7%C3%B5es%20sobre%20o%20lote%20da%20Est%C3%A2ncia%20Aroeira"
+     href="https://wa.me/6294514112?text=Ol%C3%A1%2C%20Quer%20saber%20mais%3F"
      target="_blank"
      aria-label="WhatsApp">
     <span class="wa-pulse"></span>
@@ -829,6 +835,8 @@
     const overlay = document.getElementById('videoOverlay');
     const btnPlayPause = document.getElementById('btnPlayPause');
     const btnMute = document.getElementById('btnMute');
+    const videoMeta = document.getElementById('videoMeta');
+    const videoSelector = document.getElementById('videoSelector');
 
     function setPlayUI(isPlaying){
       if (!btnPlayPause) return;
@@ -855,6 +863,24 @@
       setPlayUI(false);
     }
 
+    function switchVideo(src, label, buttonElement){
+      if (!tourVideo) return;
+      const wasPlaying = !tourVideo.paused;
+      tourVideo.pause();
+      tourVideo.src = src;
+      tourVideo.load();
+      if (videoMeta) videoMeta.textContent = `Tour ${label} • Estância Aroeira`;
+      setPlayUI(false);
+      // update active state on buttons
+      if (videoSelector) {
+        videoSelector.querySelectorAll('.video-switch').forEach(b => b.classList.remove('bg-[#c5a07d]','text-black'));
+      }
+      if (buttonElement) {
+        buttonElement.classList.add('bg-[#c5a07d]','text-black');
+      }
+      if (wasPlaying) playVideo();
+    }
+
     overlay?.addEventListener('click', playVideo);
     overlay?.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') playVideo();
@@ -873,6 +899,21 @@
         ? `<i class="fa-solid fa-volume-xmark"></i> Mute`
         : `<i class="fa-solid fa-volume-high"></i> Som`;
     });
+
+    // handle selector buttons
+    videoSelector?.querySelectorAll('.video-switch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const src = btn.getAttribute('data-src');
+        const label = btn.getAttribute('data-label') || '';
+        if (src) switchVideo(src, label, btn);
+      });
+    });
+
+    // mark first button active on load
+    if (videoSelector) {
+      const first = videoSelector.querySelector('.video-switch');
+      if (first) first.classList.add('bg-[#c5a07d]','text-black');
+    }
 
     tourVideo?.addEventListener('ended', () => setPlayUI(false));
     tourVideo?.addEventListener('pause', () => setPlayUI(false));
