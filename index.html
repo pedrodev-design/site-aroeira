@@ -695,6 +695,10 @@
     <i class="fa-brands fa-whatsapp" style="font-size:24px;"></i>
   </a>
 
+  <!-- áudio de boas-vindas (toca uma vez na carga da página) -->
+  <!-- arquivo existente: fala-inicio.mp3 na raiz -->
+  <audio id="bgAudio" src="/fala-inicio.mp3" preload="auto" autoplay></audio>
+
   <script>
    
 
@@ -711,6 +715,12 @@
 
     // Loader
     window.addEventListener('load', () => {
+      // toca áudio uma vez no carregamento; navegadores podem bloquear se não houver interação do usuário
+      const bgAudio = document.getElementById('bgAudio');
+      if (bgAudio) {
+        bgAudio.play().catch(()=>{});
+      }
+
       const tl = gsap.timeline();
       tl.to("#loader-text", { opacity: 1, scale: 1.2, duration: 2, letterSpacing: "0.2em", ease: "power4.inOut" })
         .to("#loader-subtext", { opacity: 1, duration: 1 }, "-=1")
@@ -718,6 +728,21 @@
         .to("#loader", { opacity: 0, pointerEvents: "none", duration: 1 }, "-=0.5")
         .to("#app", { opacity: 1, y: 0, duration: 1.2, ease: "expo.out" }, "-=0.5");
     });
+
+    // fallback: se o áudio ainda não tocou, inicia na primeira interação do usuário
+    (function(){
+      const bgAudio = document.getElementById('bgAudio');
+      let attempted = false;
+      function tryPlay(){
+        if (attempted || !bgAudio) return;
+        attempted = true;
+        bgAudio.play().catch(()=>{});
+        document.removeEventListener('click', tryPlay);
+        document.removeEventListener('keydown', tryPlay);
+      }
+      document.addEventListener('click', tryPlay);
+      document.addEventListener('keydown', tryPlay);
+    })();
 
     // Galeria toggle
     const galleryToggle = document.getElementById('galleryToggle');
