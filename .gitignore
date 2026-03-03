@@ -1,0 +1,9 @@
+# instaladores e pacotes
+*.exe
+*.msi
+*.zip
+*.rar
+
+# sistema
+Thumbs.db
+.DS_Store
