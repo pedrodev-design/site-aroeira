@@ -881,6 +881,19 @@
 
     <div class="page-wrap">
         <main id="app" class="relative z-10 opacity-0">
+            <!-- Promo Links Container (Top Left) -->
+            <div id="promoLinksContainer" class="fixed top-8 left-8 z-[60] pointer-events-auto flex flex-col gap-3 max-w-[280px]">
+                <style>
+                    @keyframes strongGoldBlink {
+                        0%, 100% { opacity: 1; filter: drop-shadow(0 0 5px rgba(255,191,0,0.4)); }
+                        50% { opacity: 0.6; filter: drop-shadow(0 0 2px rgba(255,191,0,0.8)); }
+                    }
+                    .text-strong-gold-blink {
+                        animation: strongGoldBlink 2s infinite ease-in-out;
+                    }
+                </style>
+                <!-- Renderizado via Javascript -->
+            </div>
             <div id="tilt-container" class="w-full max-w-lg flex flex-col items-center mx-auto">
 
                 <div id="adminVideoTrigger" class="photo-container mb-10 md:mb-12">
@@ -1282,7 +1295,7 @@
 
     <!-- áudio de boas-vindas (toca uma vez na carga da página) -->
     <!-- arquivo existente: fala-inicio.mp3 na raiz -->
-    <audio id="bgAudio" src="./fala-inicio.mp3" preload="auto" autoplay></audio>
+    <!-- áudio de boas-vindas removido conforme pedido -->
 
     <!-- NOVO PAINEL DE LOGIN -->
     <div id="loginOverlay">
@@ -1308,6 +1321,7 @@
                 <button class="admin-sidebar-btn active" data-tab="tab-overview"><i class="fa-solid fa-chart-line"></i> Visão Geral</button>
                 <button class="admin-sidebar-btn" data-tab="tab-gallery"><i class="fa-solid fa-images"></i> Galeria</button>
                 <button class="admin-sidebar-btn" data-tab="tab-comments"><i class="fa-solid fa-comments"></i> Moderação</button>
+                <button class="admin-sidebar-btn" data-tab="tab-promo"><i class="fa-solid fa-star"></i> Destaques</button>
                 <button class="admin-sidebar-btn" data-tab="tab-settings"><i class="fa-solid fa-gear"></i> Configurações</button>
                 <div style="flex:1"></div>
                 <button id="adminLogoutBtn" class="admin-sidebar-btn" style="color: #ff4444;"><i class="fa-solid fa-power-off"></i> Encerrar Sessão</button>
@@ -1369,6 +1383,33 @@
                     <div id="admin-comment-list" style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--gold) transparent;"></div>
                 </div>
 
+                <!-- TAB DESTAQUES -->
+                <div id="tab-promo" class="admin-tab">
+                    <div class="admin-header">
+                        <h2 class="admin-title">Destaques Laterais</h2>
+                    </div>
+                    <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 1rem;">Organize links agrupados por categorias no canto superior esquerdo.</p>
+                    
+                    <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+                        <h3 id="adminPromoFormTitle" style="font-size: 12px; color: var(--gold); margin-bottom: 1rem;">Adicionar Novo Destaque</h3>
+                        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                            <input type="hidden" id="adminPromoEditId" value="-1">
+                            <input type="text" id="adminPromoCat" list="promoCategoriesList" class="login-input" style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;" placeholder="Categoria (Ex: Tour de Moto)">
+                            <datalist id="promoCategoriesList"></datalist>
+                            <input type="text" id="adminPromoTitle" class="login-input" style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;" placeholder="Título (Ex: Loteamento VIP)">
+                            <input type="text" id="adminPromoSub" class="login-input" style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;" placeholder="Subtítulo">
+                            <input type="text" id="adminPromoLink" class="login-input" style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;" placeholder="Link (Ex: https://youtube...)">
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button id="adminPromoBtnSalvar" class="luxury-btn gold-filled mt-2" onclick="savePromoLinkBtn()" style="flex:1; padding: 0.6rem; font-size: 11px; border-radius: 0.5rem; text-transform: uppercase;">Adicionar Link</button>
+                                <button id="adminPromoBtnCancelar" class="luxury-btn mt-2" onclick="cancelEditPromoLink()" style="display:none; flex:1; padding: 0.6rem; font-size: 11px; border-radius: 0.5rem; text-transform: uppercase; background:rgba(255,255,255,0.1); color:white; border-color:transparent;">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 0.5rem;">Links Ativos</h3>
+                    <div id="admin-promo-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 250px; overflow-y: auto;"></div>
+                </div>
+
                 <!-- TAB SISTEMA -->
                 <div id="tab-settings" class="admin-tab">
                     <div class="admin-header">
@@ -1417,12 +1458,6 @@
 
         // Loader
         window.addEventListener('load', () => {
-            // toca áudio uma vez no carregamento; navegadores podem bloquear se não houver interação do usuário
-            const bgAudio = document.getElementById('bgAudio');
-            if (bgAudio) {
-                bgAudio.play().catch(() => { });
-            }
-
             const tl = gsap.timeline();
             tl.to("#loader-text", { opacity: 1, scale: 1.2, duration: 2, letterSpacing: "0.2em", ease: "power4.inOut" })
                 .to("#loader-subtext", { opacity: 1, duration: 1 }, "-=1")
@@ -1430,23 +1465,6 @@
                 .to("#loader", { opacity: 0, pointerEvents: "none", duration: 1 }, "-=0.5")
                 .to("#app", { opacity: 1, y: 0, duration: 1.2, ease: "expo.out" }, "-=0.5");
         });
-
-        // fallback: se o áudio ainda não tocou, inicia na primeira interação do usuário
-        (function () {
-            const bgAudio = document.getElementById('bgAudio');
-            let attempted = false;
-            function tryPlay() {
-                if (attempted || !bgAudio) return;
-                attempted = true;
-                bgAudio.play().catch(() => { });
-                document.removeEventListener('click', tryPlay);
-                document.removeEventListener('keydown', tryPlay);
-                document.removeEventListener('touchstart', tryPlay);
-            }
-            document.addEventListener('click', tryPlay);
-            document.addEventListener('keydown', tryPlay);
-            document.addEventListener('touchstart', tryPlay);
-        })();
 
         // Galeria toggle
         const galleryToggle = document.getElementById('galleryToggle');
@@ -2378,6 +2396,175 @@
              b.addEventListener('click', () => { loadAdminPhotosList(); });
         });
 
+        // ─── Promo Link Lateral JS ───
+        function getPromoData() {
+            let data = JSON.parse(localStorage.getItem('aroeira_promo') || 'null');
+            if (!data) {
+                data = [
+                    { title: "Tour Exclusivo", sub: "Vídeo Completo do Loteamento", link: "#", category: "Geral" },
+                    { title: "Passeio de Moto", sub: "Explorando as Vias", link: "#", category: "Passeios" },
+                    { title: "Lotes de 4.000m²", sub: "Oportunidade Única", link: "#", category: "Destaques" }
+                ];
+            } else if (!Array.isArray(data)) {
+                data = [data];
+            }
+            return data;
+        }
+
+        function renderPromoLinks() {
+            const data = getPromoData();
+            const container = document.getElementById('promoLinksContainer');
+            if (container) {
+                Array.from(container.children).forEach(child => {
+                    if (child.tagName !== 'STYLE') container.removeChild(child);
+                });
+                
+                const groupedData = data.reduce((acc, item) => {
+                    const cat = item.category || "Recomendados";
+                    if(!acc[cat]) acc[cat] = [];
+                    acc[cat].push(item);
+                    return acc;
+                }, {});
+
+                for (const catName in groupedData) {
+                    const header = document.createElement('div');
+                    header.style.cursor = 'pointer';
+                    header.className = 'group';
+                    header.innerHTML = `<h3 style="font-family: 'Cinzel', serif; color: var(--gold); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.4rem; margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; opacity: 0.8; user-select: none;" class="transition-opacity group-hover:opacity-100"><i class="fa-solid fa-folder transition-all duration-300"></i> ${catName}</h3>`;
+                    
+                    header.onclick = function() {
+                        const content = this.nextElementSibling;
+                        const icon = this.querySelector('i.fa-solid');
+                        if (content.style.maxHeight !== '0px' && content.style.maxHeight) {
+                            content.style.maxHeight = '0px'; content.style.opacity = '0'; content.style.marginTop = '0';
+                            if(icon) { icon.classList.remove('fa-folder-open'); icon.classList.add('fa-folder'); }
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px"; content.style.opacity = '1'; content.style.marginTop = '0.5rem';
+                            if(icon) { icon.classList.remove('fa-folder'); icon.classList.add('fa-folder-open'); }
+                        }
+                    };
+
+                    container.appendChild(header);
+
+                    const contentDiv = document.createElement('div');
+                    contentDiv.style.cssText = 'max-height: 0px; overflow: hidden; transition: all 0.3s ease-in-out; opacity: 0; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0;';
+
+                    groupedData[catName].forEach((item) => {
+                        const block = document.createElement('a');
+                        block.href = item.link;
+                        block.target = '_blank';
+                        block.className = 'flex items-center gap-3 w-full group/item cursor-pointer drop-shadow-md py-1';
+                        block.style.cssText = 'text-decoration: none; margin-left: 0.5rem;';
+                        block.innerHTML = `
+                            <div class="flex items-center justify-center w-7 h-7 min-w-[28px] rounded-full border border-[#FFBF00]/40 text-[#FFBF00] group-hover/item:bg-[#FFBF00] group-hover/item:text-black transition-all duration-300" style="box-shadow: 0 0 10px rgba(255,191,0,0.2);">
+                                <i class="fa-solid fa-play" style="font-size: 9px; margin-left: 2px;"></i>
+                            </div>
+                            <div class="flex flex-col">
+                                <h2 class="text-strong-gold-blink transition-colors duration-300 text-left" style="font-size: 12px; font-family: 'Cinzel', serif; font-weight: bold; letter-spacing: 0.05em; line-height: 1.2;">${item.title}</h2>
+                                ${item.sub ? `<p class="text-[#FFBF00]/70 text-left" style="font-size: 9px; font-family: sans-serif; letter-spacing: 0.1em; text-transform: uppercase;">${item.sub}</p>` : ''}
+                            </div>
+                        `;
+                        contentDiv.appendChild(block);
+                    });
+                    container.appendChild(contentDiv);
+                }
+            }
+
+            const adminList = document.getElementById('admin-promo-list');
+            if (adminList) {
+                adminList.innerHTML = '';
+                if (data.length === 0) {
+                    adminList.innerHTML = '<div style="font-size:10px; opacity:0.5; font-style:italic;">Nenhum destaque adicionado.</div>';
+                } else {
+                    data.forEach((item, index) => {
+                        const div = document.createElement('div');
+                        div.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:0.8rem; border-radius:0.5rem; border-left:2px solid var(--gold); gap:0.5rem; margin-bottom:0.5rem;';
+                        div.innerHTML = `
+                            <div style="flex:1;">
+                                <div style="font-size:12px; color:white; font-weight:bold;">${item.category ? `<span style="opacity:0.5; color:var(--gold);">[${item.category}]</span> ` : ''}${item.title}</div>
+                                <div style="font-size:10px; color:rgba(255,255,255,0.5);">${item.link}</div>
+                            </div>
+                            <div style="display:flex; gap:0.3rem;">
+                                <button class="luxury-btn" onclick="editPromoLink(${index})" style="padding: 0.4rem; color:var(--gold); border-color:rgba(197,160,125,0.3); background:transparent;"><i class="fa-solid fa-pen"></i></button>
+                                <button class="luxury-btn" onclick="removePromoLink(${index})" style="padding: 0.4rem; color:#ff4444; border-color:rgba(255,68,68,0.3); background:transparent;"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        `;
+                        adminList.appendChild(div);
+                    });
+                }
+            }
+
+            const datalist = document.getElementById('promoCategoriesList');
+            if(datalist) {
+                 datalist.innerHTML = '';
+                 const uniqueCats = [...new Set(data.map(item => item.category).filter(c => c))];
+                 uniqueCats.forEach(cat => {
+                     const opt = document.createElement('option');
+                     opt.value = cat;
+                     datalist.appendChild(opt);
+                 });
+            }
+        }
+
+        function editPromoLink(index) {
+            const data = getPromoData();
+            const item = data[index];
+            if(!item) return;
+            document.getElementById('adminPromoEditId').value = index;
+            document.getElementById('adminPromoCat').value = item.category || "";
+            document.getElementById('adminPromoTitle').value = item.title;
+            document.getElementById('adminPromoSub').value = item.sub;
+            document.getElementById('adminPromoLink').value = item.link;
+            document.getElementById('adminPromoFormTitle').textContent = "Editar Destaque";
+            document.getElementById('adminPromoBtnSalvar').textContent = "Salvar Alterações";
+            document.getElementById('adminPromoBtnCancelar').style.display = "block";
+            const adminPanel = document.querySelector('.admin-content');
+            if(adminPanel) adminPanel.scrollTop = 0;
+        }
+
+        function cancelEditPromoLink() {
+            document.getElementById('adminPromoEditId').value = "-1";
+            document.getElementById('adminPromoCat').value = "";
+            document.getElementById('adminPromoTitle').value = "";
+            document.getElementById('adminPromoSub').value = "";
+            document.getElementById('adminPromoLink').value = "";
+            document.getElementById('adminPromoFormTitle').textContent = "Adicionar Novo Destaque";
+            document.getElementById('adminPromoBtnSalvar').textContent = "Adicionar Link";
+            document.getElementById('adminPromoBtnCancelar').style.display = "none";
+        }
+
+        function savePromoLinkBtn() {
+            const catEl = document.getElementById('adminPromoCat');
+            const titleEl = document.getElementById('adminPromoTitle');
+            const subEl = document.getElementById('adminPromoSub');
+            const linkEl = document.getElementById('adminPromoLink');
+            const editId = parseInt(document.getElementById('adminPromoEditId').value);
+            if (!titleEl.value.trim() || !linkEl.value.trim()) { alert('Título e Link são obrigatórios!'); return; }
+            const data = getPromoData();
+            if (editId > -1 && editId < data.length) {
+                data[editId].category = catEl.value.trim();
+                data[editId].title = titleEl.value.trim();
+                data[editId].sub = subEl.value.trim();
+                data[editId].link = linkEl.value.trim();
+            } else {
+                data.push({ category: catEl.value.trim(), title: titleEl.value.trim(), sub: subEl.value.trim(), link: linkEl.value.trim() });
+            }
+            localStorage.setItem('aroeira_promo', JSON.stringify(data));
+            cancelEditPromoLink();
+            renderPromoLinks();
+        }
+
+        function removePromoLink(index) {
+            if(confirm('Remover este link de destaque?')) {
+                const data = getPromoData();
+                data.splice(index, 1);
+                localStorage.setItem('aroeira_promo', JSON.stringify(data));
+                renderPromoLinks();
+            }
+        }
+
+        // Inicializa
+        renderPromoLinks();
     </script>
 </body>
 
