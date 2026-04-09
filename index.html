@@ -2400,10 +2400,9 @@
         function getPromoData() {
             let data = JSON.parse(localStorage.getItem('aroeira_promo') || 'null');
             if (!data) {
+                // Caso o banco esteja vazio, iniciamos com o seu link principal
                 data = [
-                    { title: "Tour Exclusivo", sub: "Vídeo Completo do Loteamento", link: "#", category: "Geral" },
-                    { title: "Passeio de Moto", sub: "Explorando as Vias", link: "#", category: "Passeios" },
-                    { title: "Lotes de 4.000m²", sub: "Oportunidade Única", link: "#", category: "Destaques" }
+                    { title: "Seu lote dos sonhos em Trindade-GO", sub: "4.000m² de oportunidade", link: "https://www.youtube.com/shorts/VY9CQ8LlC4c", category: "Destaques" }
                 ];
             } else if (!Array.isArray(data)) {
                 data = [data];
@@ -2460,7 +2459,7 @@
                                 <i class="fa-solid fa-play" style="font-size: 9px; margin-left: 2px;"></i>
                             </div>
                             <div class="flex flex-col">
-                                <h2 class="text-strong-gold-blink transition-colors duration-300 text-left" style="font-size: 12px; font-family: 'Cinzel', serif; font-weight: bold; letter-spacing: 0.05em; line-height: 1.2;">${item.title}</h2>
+                                <h2 class="text-strong-gold-blink transition-colors duration-300 text-left" style="font-size: 16px; font-family: 'Cinzel', serif; font-weight: bold; letter-spacing: 0.05em; line-height: 1.2;">${item.title}</h2>
                                 ${item.sub ? `<p class="text-[#FFBF00]/70 text-left" style="font-size: 9px; font-family: sans-serif; letter-spacing: 0.1em; text-transform: uppercase;">${item.sub}</p>` : ''}
                             </div>
                         `;
