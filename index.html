@@ -816,6 +816,57 @@
             transform: translateY(-1px);
         }
 
+        /* ===== NOVO CONTAINER DE VÍDEO FLUTUANTE (TOP RIGHT) ===== */
+        .floating-video-shell {
+            width: 100%;
+            max-width: 28rem;
+            margin: 0 auto 2rem auto;
+            pointer-events: auto;
+            animation: fadeIn 1s ease-out;
+            display: none;
+        }
+
+        .floating-video-shell.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== TEXTO DE FUNDO ESTILIZADO (LATERAL) ===== */
+        .side-hint-text {
+            position: fixed;
+            top: 50%;
+            right: -8vh;
+            transform: translateY(-50%) rotate(90deg);
+            font-family: 'Cinzel', serif;
+            font-size: 18vh;
+            font-weight: 900;
+            color: var(--gold);
+            opacity: 0.05;
+            letter-spacing: 0.15em;
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+            user-select: none;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 1200px) {
+            .side-hint-text {
+                font-size: 12vh;
+                right: -5vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .side-hint-text {
+                display: none; /* Esconde no mobile para não poluir */
+            }
+        }
+
         /* ===== NOVO PAINEL ADMIN ===== */
         #adminPanelOverlay {
             position: fixed;
@@ -1043,6 +1094,7 @@
                 </style>
                 <!-- Renderizado via Javascript -->
             </div>
+
             <div id="tilt-container" class="w-full max-w-lg flex flex-col items-center mx-auto">
 
                 <div id="adminVideoTrigger" class="photo-container mb-10 md:mb-12">
@@ -1424,6 +1476,30 @@
                     Estância Aroeira • Experiência Privada • Trindade/GO
                 </div>
 
+                <!-- Video Container (Below Guestbook) -->
+                <div id="floatingVideoContainer" class="floating-video-shell">
+                    <div class="lux-card" style="position: relative; overflow: hidden;">
+                        <div style="padding: 0.8rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center;">
+                            <div class="font-luxury" style="font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold);">Destaque Gold</div>
+                            <div id="floatingVideoClose" style="cursor: pointer; opacity: 0.5; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'"><i class="fa-solid fa-xmark"></i></div>
+                        </div>
+                        <div id="floatingVideoStage" style="aspect-ratio: 1/1; background: #000; position: relative; cursor: pointer;">
+                            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.3'">
+                                <i class="fa-solid fa-expand" style="font-size: 24px; color: var(--gold); filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));"></i>
+                            </div>
+                            <!-- Video será injetado pelo JS -->
+                        </div>
+                        <div style="padding: 0.8rem 1rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center;">
+                            <div id="floatingVideoTitle" style="font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7;">Aroeira Exclusive</div>
+                            <div style="display: flex; gap: 0.8rem;">
+                                <button id="floatingVideoMute" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 10px;"><i class="fa-solid fa-volume-xmark"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="side-hint-text">121518</div>
+
             </div>
         </main>
     </div>
@@ -1440,6 +1516,7 @@
             <div style="position: relative;">
                 <div class="lightbox-media">
                     <img id="lightboxImg" src="" alt="Imagem ampliada">
+                    <video id="lightboxVideo" style="display: none; max-width: 100%; max-height: 100%; object-fit: contain;" controls playsinline></video>
                 </div>
 
                 <div class="lightbox-nav">
@@ -1535,6 +1612,8 @@
                     Moderação</button>
                 <button class="admin-sidebar-btn" data-tab="tab-promo"><i class="fa-solid fa-star"></i>
                     Destaques</button>
+                <button class="admin-sidebar-btn" data-tab="tab-float-videos"><i class="fa-solid fa-play"></i>
+                    Vids Flutuantes</button>
                 <button class="admin-sidebar-btn" data-tab="tab-settings"><i class="fa-solid fa-gear"></i>
                     Configurações</button>
                 <div style="flex:1"></div>
@@ -1664,6 +1743,66 @@
                         <button onclick="exportPromoData()" class="luxury-btn" style="width: 100%; font-size: 10px; padding: 0.7rem; border-color: var(--gold); color: var(--gold);">
                             <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Gerar Código de Publicação
                         </button>
+                    </div>
+                </div>
+
+                <!-- TAB VÍDEOS FLUTUANTES -->
+                <div id="tab-float-videos" class="admin-tab">
+                    <div class="admin-header">
+                        <h2 class="admin-title">Vídeos Flutuantes</h2>
+                    </div>
+                    <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 1rem;">Escolha os vídeos que aparecerão no container no topo direito do site.</p>
+                    
+                    <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 1rem; border: 1px solid rgba(197, 160, 125, 0.15); margin-bottom: 2rem;">
+                        <h3 style="font-size: 13px; color: var(--gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa-solid fa-square-plus"></i> Adicionar à Fila
+                        </h3>
+                        
+                        <!-- Opção 1: Selecionar do Projeto -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5; display: block; margin-bottom: 0.6rem;">Vídeos do Projeto</label>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="luxury-btn" onclick="addProjectFloatVideo('./videos/1.mp4', 'Tour 1')" style="padding: 0.5rem 0.8rem; font-size: 10px;">Vídeo 1</button>
+                                <button class="luxury-btn" onclick="addProjectFloatVideo('./videos/2.mp4', 'Tour 2')" style="padding: 0.5rem 0.8rem; font-size: 10px;">Vídeo 2</button>
+                                <button class="luxury-btn" onclick="addProjectFloatVideo('./videos/3.mp4', 'Tour 3')" style="padding: 0.5rem 0.8rem; font-size: 10px;">Vídeo 3</button>
+                                <button class="luxury-btn" onclick="addProjectFloatVideo('./videos/4.mp4', 'Tour 4')" style="padding: 0.5rem 0.8rem; font-size: 10px;">Vídeo 4</button>
+                                <button class="luxury-btn" onclick="addProjectFloatVideo('./videos/5.mp4', 'Tour 5')" style="padding: 0.5rem 0.8rem; font-size: 10px;">Vídeo 5</button>
+                                <button class="luxury-btn" onclick="addProjectFloatVideo('./videos/6.mp4', 'Tour 6')" style="padding: 0.5rem 0.8rem; font-size: 10px;">Vídeo 6</button>
+                            </div>
+                        </div>
+
+                        <div style="height: 1px; background: rgba(255,255,255,0.05); margin: 1.5rem 0;"></div>
+
+                        <!-- Opção 2: Explorar do Computador -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <label style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5; display: block; margin-bottom: 0.6rem;">Explorar no Computador (Upload Local)</label>
+                            <input type="file" id="adminFloatFileInput" accept="video/*" style="display: none;" onchange="handleFloatFileUpload(this)">
+                            <button class="luxury-btn gold-filled" onclick="document.getElementById('adminFloatFileInput').click()" style="width: 100%; padding: 0.8rem; font-size: 11px;">
+                                <i class="fa-solid fa-folder-open mr-2"></i> Abrir Arquivo de Vídeo
+                            </button>
+                            <div id="uploadStatus" style="font-size: 9px; opacity: 0.5; margin-top: 0.5rem; display: none;"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Salvando no site...</div>
+                        </div>
+
+                        <div style="height: 1px; background: rgba(255,255,255,0.05); margin: 1.5rem 0;"></div>
+
+                        <!-- Opção 3: Manual -->
+                        <div>
+                            <label style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5; display: block; margin-bottom: 0.6rem;">Caminho Manual</label>
+                            <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                                <input type="text" id="adminFloatVideoTitle" class="login-input" style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white; font-size: 12px;" placeholder="Título (Ex: Drone Interno)">
+                                <input type="text" id="adminFloatVideoSrc" class="login-input" style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white; font-size: 12px;" placeholder="Caminho (Ex: ./videos/8.mp4)">
+                                <button class="luxury-btn" onclick="addFloatingVideo()" style="padding: 0.7rem; font-size: 11px;">
+                                    <i class="fa-solid fa-plus mr-1"></i> Adicionar Caminho
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fa-solid fa-list-ol"></i> Fila Ativa
+                    </h3>
+                    <div id="admin-float-video-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 300px; overflow-y: auto; padding-right: 0.5rem;">
+                        <!-- JS injects here -->
                     </div>
                 </div>
 
@@ -2339,7 +2478,29 @@
             const item = thumbs[currentIndex];
             const src = item.getAttribute('data-full') || item.querySelector('img')?.src;
             const label = item.getAttribute('data-label') || 'Galeria';
-            if (lightboxImg) lightboxImg.src = src;
+            
+            const lImg = document.getElementById('lightboxImg');
+            const lVid = document.getElementById('lightboxVideo');
+            
+            if (src.toLowerCase().endsWith('.mp4')) {
+                if(lImg) lImg.style.display = 'none';
+                if(lVid) {
+                    lVid.style.display = 'block';
+                    lVid.src = src;
+                    lVid.play();
+                }
+            } else {
+                if(lVid) {
+                    lVid.style.display = 'none';
+                    lVid.pause();
+                    lVid.src = '';
+                }
+                if(lImg) {
+                    lImg.style.display = 'block';
+                    lImg.src = src;
+                }
+            }
+            
             if (lightboxLabel) lightboxLabel.textContent = label;
 
             currentPhotoSrc = src;
@@ -2352,6 +2513,13 @@
 
         function closeLightbox() {
             if (!lightbox?.classList.contains('open')) return;
+            
+            const lVid = document.getElementById('lightboxVideo');
+            if(lVid) {
+                lVid.pause();
+                lVid.src = '';
+            }
+
             gsap.to(".lightbox-shell", {
                 opacity: 0, y: 10, scale: 0.99, duration: 0.35, ease: "power2.in",
                 onComplete: () => {
@@ -2367,13 +2535,35 @@
             const item = thumbs[currentIndex];
             const src = item.getAttribute('data-full') || item.querySelector('img')?.src;
             const label = item.getAttribute('data-label') || 'Galeria';
-            if (lightboxImg) lightboxImg.src = src;
+            
+            const lImg = document.getElementById('lightboxImg');
+            const lVid = document.getElementById('lightboxVideo');
+            
+            if (src.toLowerCase().endsWith('.mp4')) {
+                if(lImg) lImg.style.display = 'none';
+                if(lVid) {
+                    lVid.style.display = 'block';
+                    lVid.src = src;
+                    lVid.play();
+                }
+            } else {
+                if(lVid) {
+                    lVid.style.display = 'none';
+                    lVid.pause();
+                    lVid.src = '';
+                }
+                if(lImg) {
+                    lImg.style.display = 'block';
+                    lImg.src = src;
+                }
+            }
+            
             if (lightboxLabel) lightboxLabel.textContent = label;
 
             currentPhotoSrc = src;
             renderComments();
 
-            gsap.fromTo("#lightboxImg", { opacity: 0, scale: 0.995 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" });
+            gsap.fromTo("#lightboxImg, #lightboxVideo", { opacity: 0, scale: 0.995 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" });
         }
 
         lightboxClose?.addEventListener('click', closeLightbox);
@@ -3067,8 +3257,255 @@
             animate();
         })();
 
+        // ─── Floating Video Container JS (IDB + Queue) ───
+        let currentFloatIdx = 0;
+        let floatVideos = JSON.parse(localStorage.getItem('aroeira_float_videos') || '[]');
+
+        // IndexedDB for large videos
+        const VIDEO_DB_NAME = "AroeiraVideoDB";
+        const VIDEO_STORE_NAME = "float_blobs";
+
+        function openVideoDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(VIDEO_DB_NAME, 1);
+                request.onupgradeneeded = e => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains(VIDEO_STORE_NAME)) {
+                        db.createObjectStore(VIDEO_STORE_NAME);
+                    }
+                };
+                request.onsuccess = e => resolve(e.target.result);
+                request.onerror = e => reject(e.target.error);
+            });
+        }
+
+        async function saveVideoBlob(id, blob) {
+            const db = await openVideoDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(VIDEO_STORE_NAME, "readwrite");
+                const store = tx.objectStore(VIDEO_STORE_NAME);
+                const request = store.put(blob, id);
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function getVideoBlob(id) {
+            const db = await openVideoDB();
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(VIDEO_STORE_NAME, "readonly");
+                const store = tx.objectStore(VIDEO_STORE_NAME);
+                const request = store.get(id);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function deleteVideoBlob(id) {
+            const db = await openVideoDB();
+            const tx = db.transaction(VIDEO_STORE_NAME, "readwrite");
+            tx.objectStore(VIDEO_STORE_NAME).delete(id);
+        }
+
+        async function handleFloatFileUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const status = document.getElementById('uploadStatus');
+            if (status) status.style.display = 'block';
+
+            try {
+                const id = "local_" + Date.now();
+                await saveVideoBlob(id, file);
+                
+                floatVideos.push({ 
+                    title: file.name.split('.')[0], 
+                    src: id,
+                    isLocal: true
+                });
+                
+                localStorage.setItem('aroeira_float_videos', JSON.stringify(floatVideos));
+                loadAdminFloatVideos();
+                renderFloatingVideo();
+                alert('Vídeo carregado e salvo localmente!');
+            } catch (err) {
+                console.error(err);
+                alert('Erro ao salvar vídeo: ' + err.message);
+            } finally {
+                if (status) status.style.display = 'none';
+                input.value = '';
+            }
+        }
+
+        function addProjectFloatVideo(src, title) {
+            floatVideos.push({ title, src, isLocal: false });
+            localStorage.setItem('aroeira_float_videos', JSON.stringify(floatVideos));
+            loadAdminFloatVideos();
+            renderFloatingVideo();
+            alert(`"${title}" adicionado à fila!`);
+        }
+
+        async function renderFloatingVideo() {
+            const container = document.getElementById('floatingVideoContainer');
+            const stage = document.getElementById('floatingVideoStage');
+            const title = document.getElementById('floatingVideoTitle');
+            if (!container || !stage || floatVideos.length === 0) {
+                container?.classList.remove('active');
+                return;
+            }
+
+            container.classList.add('active');
+            const current = floatVideos[currentFloatIdx];
+
+            let videoSrc = current.src;
+            if (current.isLocal) {
+                try {
+                    const blob = await getVideoBlob(current.src);
+                    if (blob) {
+                        videoSrc = URL.createObjectURL(blob);
+                    } else {
+                        console.error('Blob não encontrado para o ID:', current.src);
+                    }
+                } catch (e) {
+                    console.error('Erro ao recuperar blob:', e);
+                }
+            }
+
+            // Injeta o vídeo (mantendo os overlays inseridos no HTML)
+            const videoHtml = `<video id="floatVideoPlayer" style="width:100%; height:100%; object-fit:cover;" autoplay muted playsinline src="${videoSrc}"></video>`;
+            const existingVideo = stage.querySelector('video');
+            if (existingVideo) {
+                // Se era um blob anterior, revoga para liberar memória
+                if (existingVideo.src.startsWith('blob:')) URL.revokeObjectURL(existingVideo.src);
+                existingVideo.src = videoSrc;
+            } else {
+                stage.insertAdjacentHTML('beforeend', videoHtml);
+            }
+            
+            if (title) title.textContent = current.title;
+
+            // Click no Stage para abrir Lightbox
+            stage.onclick = () => {
+                const player = document.getElementById('floatVideoPlayer');
+                if (player) player.pause();
+                
+                // Abre lightbox simulando um thumb temporário
+                const tempThumb = document.createElement('div');
+                tempThumb.setAttribute('data-full', current.src);
+                tempThumb.setAttribute('data-label', current.title);
+                
+                // Precisamos adicionar à lista temporária ou apenas chamar a função de abrir
+                // Como openLightbox usa o array `thumbs`, vamos injetar ou adaptar
+                
+                const lImg = document.getElementById('lightboxImg');
+                const lVid = document.getElementById('lightboxVideo');
+                
+                if (lImg) lImg.style.display = 'none';
+                if (lVid) {
+                    lVid.style.display = 'block';
+                    lVid.src = videoSrc; // Usa a mesma fonte (URL ou Blob)
+                    lVid.play();
+                }
+                
+                if (lightboxLabel) lightboxLabel.textContent = current.title;
+                currentPhotoSrc = current.isLocal ? "local_video" : current.src;
+                renderComments();
+                
+                lightbox?.classList.add('open');
+                lightbox?.setAttribute('aria-hidden', 'false');
+                gsap.fromTo(".lightbox-shell", { opacity: 0, y: 14, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" });
+            };
+
+            const player = document.getElementById('floatVideoPlayer');
+            player.onended = () => {
+                currentFloatIdx = (currentFloatIdx + 1) % floatVideos.length;
+                renderFloatingVideo();
+            };
+
+            // Mute/Unmute logic
+            const muteBtn = document.getElementById('floatingVideoMute');
+            if (muteBtn) {
+                muteBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    player.muted = !player.muted;
+                    muteBtn.innerHTML = player.muted ? '<i class="fa-solid fa-volume-xmark"></i>' : '<i class="fa-solid fa-volume-high"></i>';
+                };
+            }
+
+            // Close logic
+            const closeBtn = document.getElementById('floatingVideoClose');
+            if (closeBtn) {
+                closeBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    container.classList.remove('active');
+                    player.pause();
+                };
+            }
+        }
+
+        function addFloatingVideo() {
+            const titleInput = document.getElementById('adminFloatVideoTitle');
+            const srcInput = document.getElementById('adminFloatVideoSrc');
+            const title = titleInput.value.trim();
+            const src = srcInput.value.trim();
+
+            if (!title || !src) { alert('Título e Caminho são obrigatórios!'); return; }
+
+            floatVideos.push({ title, src });
+            localStorage.setItem('aroeira_float_videos', JSON.stringify(floatVideos));
+            titleInput.value = '';
+            srcInput.value = '';
+            loadAdminFloatVideos();
+            renderFloatingVideo();
+            alert('Vídeo adicionado com sucesso!');
+        }
+
+        async function removeFloatingVideo(idx) {
+            if (confirm('Remover este vídeo da fila?')) {
+                const v = floatVideos[idx];
+                if (v.isLocal) {
+                    await deleteVideoBlob(v.src);
+                }
+                floatVideos.splice(idx, 1);
+                localStorage.setItem('aroeira_float_videos', JSON.stringify(floatVideos));
+                loadAdminFloatVideos();
+                if (currentFloatIdx >= floatVideos.length) currentFloatIdx = 0;
+                renderFloatingVideo();
+            }
+        }
+
+        function loadAdminFloatVideos() {
+            const list = document.getElementById('admin-float-video-list');
+            if (!list) return;
+            list.innerHTML = '';
+
+            if (floatVideos.length === 0) {
+                list.innerHTML = '<div style="font-size:10px; opacity:0.5; font-style:italic;">Nenhum vídeo na fila.</div>';
+                return;
+            }
+
+            floatVideos.forEach((v, idx) => {
+                const div = document.createElement('div');
+                div.style.cssText = 'display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:0.8rem; border-radius:0.5rem; border-left:2px solid var(--gold); gap:0.5rem; margin-bottom:0.5rem;';
+                div.innerHTML = `
+                    <div style="flex:1;">
+                        <div style="font-size:12px; color:white; font-weight:bold;">${v.title}</div>
+                        <div style="font-size:10px; color:rgba(255,255,255,0.5);">${v.src}</div>
+                    </div>
+                    <button class="luxury-btn" onclick="removeFloatingVideo(${idx})" style="padding: 0.4rem; color:#ff4444; border-color:rgba(255,68,68,0.3); background:transparent;"><i class="fa-solid fa-trash"></i></button>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // Hook up the menu clicks
+        document.querySelectorAll('.admin-sidebar-btn[data-tab="tab-float-videos"]').forEach(b => {
+            b.addEventListener('click', () => { loadAdminFloatVideos(); });
+        });
+
         // Inicializa
         renderPromoLinks();
+        renderFloatingVideo();
     </script>
 </body>
 
