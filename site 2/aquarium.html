@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquário Virtual | Experiência Relaxante</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root {
+            --water-deep: #001b44;
+            --water-mid: #004b8d;
+            --water-light: #00b4d8;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 0%, var(--water-mid) 0%, var(--water-deep) 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Raios de luz */
+        .light-rays {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.05) 10%,
+                transparent 20%
+            );
+            mask-image: linear-gradient(to bottom, black, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+            filter: blur(20px);
+            animation: moveRays 10s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes moveRays {
+            from { transform: translateX(-5%); }
+            to { transform: translateX(5%); }
+        }
+
+        /* Bolhas */
+        .bubble {
+            position: absolute;
+            bottom: -20px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Plantas */
+        .sea-weed {
+            position: absolute;
+            bottom: 0;
+            width: 40px;
+            height: 150px;
+            background: linear-gradient(to top, #073b3a, #1a936f);
+            border-radius: 50% 50% 0 0;
+            transform-origin: bottom center;
+            animation: sway 4s infinite ease-in-out;
+            filter: blur(1px);
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg) skewX(-2deg); }
+            50% { transform: rotate(5deg) skewX(2deg); }
+        }
+
+        /* Peixes */
+        .fish {
+            position: absolute;
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .fish svg {
+            width: 100px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        .ui-overlay {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: white;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .ui-overlay h1 {
+            font-weight: 300;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin: 0;
+        }
+
+        .ui-overlay p {
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            opacity: 0.4;
+            margin-top: 0.5rem;
+        }
+
+        #btn-back {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        #btn-back:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="light-rays"></div>
+    <div id="bubbles-container"></div>
+    <div id="aquarium"></div>
+
+    <div class="ui-overlay">
+        <h1>Aquarium</h1>
+        <p>Experiência Imersiva em Azul</p>
+    </div>
+
+    <a href="../index.html" id="btn-back">Voltar para Aroeira</a>
+
+    <script>
+        const aquarium = document.getElementById('aquarium');
+        const bubblesContainer = document.getElementById('bubbles-container');
+        
+        // Cores vibrantes para os peixes
+        const fishColors = [
+            '#FF6B6B', '#FFD93D', '#4D96FF', '#6BCB77', '#F473B9', '#FF9F45'
+        ];
+
+        // Criar bolhas
+        function createBubble() {
+            const b = document.createElement('div');
+            b.className = 'bubble';
+            const size = Math.random() * 10 + 5;
+            b.style.width = size + 'px';
+            b.style.height = size + 'px';
+            b.style.left = Math.random() * 100 + 'vw';
+            bubblesContainer.appendChild(b);
+
+            gsap.to(b, {
+                y: -(window.innerHeight + 100),
+                x: '+=20',
+                duration: Math.random() * 5 + 5,
+                ease: 'power1.in',
+                onComplete: () => b.remove()
+            });
+        }
+        setInterval(createBubble, 1500);
+
+        // Criar plantas
+        for(let i=0; i<15; i++) {
+            const w = document.createElement('div');
+            w.className = 'sea-weed';
+            w.style.left = (Math.random() * 100) + 'vw';
+            w.style.height = (Math.random() * 200 + 100) + 'px';
+            w.style.animationDelay = (Math.random() * 5) + 's';
+            w.style.opacity = Math.random() * 0.5 + 0.5;
+            document.body.appendChild(w);
+        }
+
+        // Criar Peixes
+        function createFish(color) {
+            const fish = document.createElement('div');
+            fish.className = 'fish';
+            fish.innerHTML = `
+                <svg viewBox="0 0 100 50">
+                    <path d="M10 25 C 10 10, 50 5, 80 25 C 50 45, 10 40, 10 25" fill="${color}" />
+                    <path d="M80 25 L 95 10 L 95 40 Z" fill="${color}" opacity="0.8" />
+                    <circle cx="25" cy="20" r="3" fill="white" />
+                    <circle cx="25" cy="20" r="1.5" fill="black" />
+                </svg>
+            `;
+            aquarium.appendChild(fish);
+
+            // Posição inicial
+            const startX = Math.random() > 0.5 ? -150 : window.innerWidth + 150;
+            const startY = Math.random() * window.innerHeight;
+            gsap.set(fish, { x: startX, y: startY });
+
+            moveFish(fish);
+        }
+
+        function moveFish(fish) {
+            const targetX = Math.random() * (window.innerWidth - 100);
+            const targetY = Math.random() * (window.innerHeight - 50);
+            
+            // Determinar direção para virar o peixe
+            const currentX = gsap.getProperty(fish, "x");
+            const isGoingLeft = targetX < currentX;
+            
+            gsap.to(fish, {
+                x: targetX,
+                y: targetY,
+                duration: Math.random() * 5 + 5,
+                ease: 'sine.inOut',
+                onStart: () => {
+                    gsap.to(fish, { scaleX: isGoingLeft ? -1 : 1, duration: 0.5 });
+                },
+                onComplete: () => moveFish(fish)
+            });
+        }
+
+        // Adicionar vários peixes
+        fishColors.forEach(color => createFish(color));
+        fishColors.forEach(color => createFish(color)); // Dobrar a quantidade
+
+    </script>
+</body>
+</html>
