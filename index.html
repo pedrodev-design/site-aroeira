@@ -2677,12 +2677,16 @@
         // Este array contém os dados que aparecem para TODOS os usuários (Virtual/Global)
         // O desenvolvedor atualiza este array quando o admin envia o código de publicação.
         const GLOBAL_PROMO_DATA = [
-            { 
-                title: "Seu lote dos sonhos em Trindade-GO", 
-                sub: "4.000m² de oportunidade", 
-                link: "https://www.youtube.com/shorts/VY9CQ8LlC4c", 
-                category: "Terrenos Recomendados" // Categoria Especial
-            }
+            { "title": "Chácara 4.000m2 | Trindade - GO", "sub": "4.000m² de oportunidade", "link": "https://www.youtube.com/shorts/VY9CQ8LlC4c", "category": "Terrenos Recomendados" },
+            { "title": "Tatuagem: Veja como é feita", "sub": "Arte e Profissionalismo", "link": "https://www.youtube.com/@LiaAssistenteVirtual-m4", "category": "Recomendados" },
+            { "title": "Lelo Jorge", "sub": "Apresentação Especial", "link": "https://www.instagram.com/p/DWRz0LCkRBy/", "category": "Recomendados" },
+            { "title": "Pular corda", "sub": "Fitness no campo", "link": "https://www.youtube.com/shorts/lt0RG8kBKno", "category": "Esportes" },
+            { "title": "Aventura", "sub": "Trilhas Radicais", "link": "https://www.youtube.com/watch?v=1-D9VJRyc34", "category": "Esportes" },
+            { "title": "Simulador de Grau", "sub": "Emoção e Técnica", "link": "https://www.youtube.com/watch?v=U2w5uDBY-I8", "category": "Esportes" },
+            { "title": "ANDAR DE UMA RODA", "sub": "Equilíbrio", "link": "https://www.youtube.com/watch?v=OrlRU6liumU&t=280s", "category": "Esportes" },
+            { "title": "Montanha russa", "sub": "Beto Carrero", "link": "https://www.dropbox.com/home/TUDO%20NOVO%202024/BETO%20CARRERO%20ABRIL%202024/FOTOS%20DAS%20F%C3%89RIAS/2025-08?preview=MARCIO+GIOVANNA.mov", "category": "Esportes" },
+            { "title": "Gato endemoniado", "sub": "Diversão", "link": "https://www.youtube.com/watch?v=-3q5IdpxVLM", "category": "Humor" },
+            { "title": "Nossos canais: Podcast", "sub": "Entrevistas e Dicas", "link": "https://www.youtube.com/@LiaAssistenteVirtual-m4/posts", "category": "Podcast" }
         ];
 
         function getPromoData() {
@@ -2717,14 +2721,26 @@
                 }, {});
 
                 for (const catName in groupedData) {
-                    const isSpecial = catName === "Terrenos Recomendados";
+                    const lowCat = catName.toLowerCase();
+                    const isSpecial = lowCat.includes("terrenos");
+                    
+                    // Mapeamento de Ícones por Categoria
+                    let iconClass = 'fa-folder';
+                    let iconColor = '#FFBF00';
+                    
+                    if (lowCat.includes("terrenos")) { iconClass = 'fa-star'; iconColor = '#FFD700'; }
+                    else if (lowCat.includes("podcast")) { iconClass = 'fa-microphone-lines'; iconColor = '#f0a3ff'; }
+                    else if (lowCat.includes("esportes")) { iconClass = 'fa-medal'; iconColor = '#4facfe'; }
+                    else if (lowCat.includes("humor")) { iconClass = 'fa-face-laugh-beam'; iconColor = '#44ff44'; }
+                    else if (lowCat.includes("recomenda")) { iconClass = 'fa-heart'; iconColor = '#ff4f81'; }
+
                     const header = document.createElement('div');
                     header.style.cursor = 'pointer';
                     header.className = 'group';
                     header.innerHTML = `
-                        <h3 style="font-family: 'Cinzel', serif; color: ${isSpecial ? '#FFD700' : '#FFBF00'}; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.4rem; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem; user-select: none;" 
-                            class="transition-all duration-300 hover:scale-110 origin-left cursor-pointer drop-shadow-sm">
-                            <i class="fa-solid ${isSpecial ? 'fa-star' : 'fa-folder'} transition-all duration-300 ${isSpecial ? 'text-strong-gold-blink' : ''}"></i> 
+                        <h3 style="font-family: 'Cinzel', serif; color: ${iconColor}; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.4rem; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem; user-select: none;" 
+                            class="transition-all duration-300 hover:scale-110 origin-left cursor-pointer">
+                            <i class="fa-solid ${iconClass} transition-all duration-300 ${isSpecial ? 'text-strong-gold-blink' : ''}" style="filter: drop-shadow(0 0 5px ${iconColor}44);"></i> 
                             ${catName}
                         </h3>`;
 
@@ -2735,13 +2751,19 @@
                             content.style.maxHeight = '0px'; content.style.opacity = '0'; content.style.marginTop = '0';
                             if (icon) { 
                                 if (isSpecial) { icon.classList.remove('fa-star-half-stroke'); icon.classList.add('fa-star'); }
-                                else { icon.classList.remove('fa-folder-open'); icon.classList.add('fa-folder'); }
+                                else { 
+                                    // Reset para o ícone padrão da categoria ao fechar
+                                    icon.className = `fa-solid ${iconClass} transition-all duration-300`;
+                                }
                             }
                         } else {
                             content.style.maxHeight = content.scrollHeight + "px"; content.style.opacity = '1'; content.style.marginTop = '0.5rem';
                             if (icon) { 
                                 if (isSpecial) { icon.classList.remove('fa-star'); icon.classList.add('fa-star-half-stroke'); }
-                                else { icon.classList.remove('fa-folder'); icon.classList.add('fa-folder-open'); }
+                                else { 
+                                    icon.classList.add('fa-bounce');
+                                    setTimeout(() => icon.classList.remove('fa-bounce'), 1000);
+                                }
                             }
                         }
                     };
