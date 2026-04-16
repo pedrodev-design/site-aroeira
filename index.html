@@ -6,12 +6,12 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-871510412"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18077292147"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'AW-871510412');
-      gtag('config', 'AW-18077292147');
+        gtag('config', 'AW-871510412');
+        gtag('config', 'AW-18077292147');
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -168,7 +168,8 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1500; /* Above loader (1000) and content (10) */
+            z-index: 1500;
+            /* Above loader (1000) and content (10) */
         }
 
         .photo-ring {
@@ -817,73 +818,183 @@
 
         /* ===== NOVO PAINEL ADMIN ===== */
         #adminPanelOverlay {
-            position: fixed; inset: 0; z-index: 9999; display: none;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(15px);
-            align-items: center; justify-content: center;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            align-items: center;
+            justify-content: center;
         }
-        #adminPanelOverlay.open { display: flex; }
+
+        #adminPanelOverlay.open {
+            display: flex;
+        }
+
         .admin-modal {
-            width: min(95vw, 1000px); height: min(90vh, 700px);
-            background: rgba(10,10,10,0.95);
+            width: min(95vw, 1000px);
+            height: min(90vh, 700px);
+            background: rgba(10, 10, 10, 0.95);
             border: 1px solid rgba(197, 160, 125, 0.3);
-            border-radius: 1.5rem; overflow: hidden;
-            display: flex; flex-direction: column;
-            box-shadow: 0 0 100px rgba(197,160,125,0.15);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 100px rgba(197, 160, 125, 0.15);
         }
-        @media(min-width: 768px) { .admin-modal { flex-direction: row; } }
+
+        @media(min-width: 768px) {
+            .admin-modal {
+                flex-direction: row;
+            }
+        }
+
         .admin-sidebar {
-            width: 100%; background: rgba(0,0,0,0.5);
-            border-right: 1px solid rgba(255,255,255,0.05); padding: 1.5rem;
-            display: flex; flex-direction: column; gap: 0.5rem;
-            overflow-y: auto; border-bottom: 1px solid rgba(255,255,255,0.05);
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            overflow-y: auto;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-        @media(min-width: 768px) { .admin-sidebar { border-bottom: none; width: 250px; } }
+
+        @media(min-width: 768px) {
+            .admin-sidebar {
+                border-bottom: none;
+                width: 250px;
+            }
+        }
+
         .admin-sidebar-btn {
-            background: transparent; color: rgba(255,255,255,0.6);
-            border: none; text-align: left; padding: 0.75rem 1rem;
-            border-radius: 0.75rem; cursor: pointer; transition: all 0.3s;
-            font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
-            display: flex; align-items: center; gap: 0.75rem;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            border: none;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
-        .admin-sidebar-btn:hover { background: rgba(197,160,125,0.1); color: white; }
+
+        .admin-sidebar-btn:hover {
+            background: rgba(197, 160, 125, 0.1);
+            color: white;
+        }
+
         .admin-sidebar-btn.active {
-            background: rgba(197,160,125,0.2); color: var(--gold); border-left: 2px solid var(--gold);
+            background: rgba(197, 160, 125, 0.2);
+            color: var(--gold);
+            border-left: 2px solid var(--gold);
         }
+
         .admin-content {
-            flex: 1; padding: 2rem; overflow-y: auto; position: relative;
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            position: relative;
         }
-        .admin-tab { display: none; }
-        .admin-tab.active { display: block; animation: fadeIn 0.4s ease; }
+
+        .admin-tab {
+            display: none;
+        }
+
+        .admin-tab.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
         .admin-header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid rgba(197,160,125,0.2); padding-bottom: 1rem; margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(197, 160, 125, 0.2);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
-        .admin-title { font-size: 16px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.2em; font-family: 'Cinzel', serif;}
+
+        .admin-title {
+            font-size: 16px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-family: 'Cinzel', serif;
+        }
+
         .admin-stat-card {
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 1rem; padding: 1.5rem; text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
         }
-        .admin-stat-val { font-size: 32px; font-weight: bold; color: var(--gold); margin: 0.5rem 0;}
-        .admin-stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.5;}
-        
+
+        .admin-stat-val {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--gold);
+            margin: 0.5rem 0;
+        }
+
+        .admin-stat-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            opacity: 0.5;
+        }
+
         /* Login Modal */
         #loginOverlay {
-            position: fixed; inset: 0; z-index: 10000; display: none;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
-            align-items: center; justify-content: center;
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: none;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
         }
-        #loginOverlay.open { display: flex; }
+
+        #loginOverlay.open {
+            display: flex;
+        }
+
         .login-box {
-            background: rgba(15,15,15,0.95); border: 1px solid var(--gold);
-            padding: 2.5rem; border-radius: 1.5rem; text-align: center;
-            box-shadow: 0 0 60px rgba(197,160,125,0.2); width: min(90vw, 360px);
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid var(--gold);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(197, 160, 125, 0.2);
+            width: min(90vw, 360px);
         }
+
         .login-input {
-            width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 0.5rem;
-            color: white; text-align: center; margin: 1.5rem 0; font-size: 14px; letter-spacing: 0.2em;
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            color: white;
+            text-align: center;
+            margin: 1.5rem 0;
+            font-size: 14px;
+            letter-spacing: 0.2em;
         }
-        .login-input:focus { outline: none; border-color: var(--gold); }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
     </style>
 </head>
 
@@ -909,12 +1020,23 @@
     <div class="page-wrap">
         <main id="app" class="relative z-10 opacity-0">
             <!-- Promo Links Container (Top Left) -->
-            <div id="promoLinksContainer" class="fixed top-8 left-8 z-[60] pointer-events-auto flex flex-col gap-3 max-w-[280px]">
+            <div id="promoLinksContainer"
+                class="fixed top-8 left-8 z-[60] pointer-events-auto flex flex-col gap-3 max-w-[280px]">
                 <style>
                     @keyframes strongGoldBlink {
-                        0%, 100% { opacity: 1; filter: drop-shadow(0 0 5px rgba(255,191,0,0.4)); }
-                        50% { opacity: 0.6; filter: drop-shadow(0 0 2px rgba(255,191,0,0.8)); }
+
+                        0%,
+                        100% {
+                            opacity: 1;
+                            filter: drop-shadow(0 0 5px rgba(255, 191, 0, 0.4));
+                        }
+
+                        50% {
+                            opacity: 0.6;
+                            filter: drop-shadow(0 0 2px rgba(255, 191, 0, 0.8));
+                        }
                     }
+
                     .text-strong-gold-blink {
                         animation: strongGoldBlink 2s infinite ease-in-out;
                     }
@@ -969,8 +1091,8 @@
                         <i class="fa-solid fa-map-location-dot fa-icon text-[#c5a07d]"></i>
                     </a>
 
-                    <a href="https://www.youtube.com/@LiaAssistenteVirtual-m4"
-                        target="_blank" class="luxury-btn flex items-center justify-between group">
+                    <a href="https://www.youtube.com/@LiaAssistenteVirtual-m4" target="_blank"
+                        class="luxury-btn flex items-center justify-between group">
                         <span class="text-[10px] sm:text-[11px] tracking-widest uppercase text-white/80">
                             <i class="fa-brands fa-youtube fa-icon mr-2 text-[#c5a07d]"></i> Canal do YouTube
                         </span>
@@ -996,8 +1118,11 @@
                             </div>
                             <div style="display:flex; gap: 0.5rem; align-items:center;">
                                 <!-- Botão admin: só aparece no modo admin -->
-                                <button id="adminAddPhotoBtn" class="gallery-toggle" type="button" title="Adicionar foto (Admin)" style="display:none; background: rgba(197,160,125,0.12); border-color: rgba(197,160,125,0.5);">
-                                    <i class="fa-solid fa-plus mr-1" style="color: var(--gold);"></i> <span style="color:var(--gold);">Foto</span>
+                                <button id="adminAddPhotoBtn" class="gallery-toggle" type="button"
+                                    title="Adicionar foto (Admin)"
+                                    style="display:none; background: rgba(197,160,125,0.12); border-color: rgba(197,160,125,0.5);">
+                                    <i class="fa-solid fa-plus mr-1" style="color: var(--gold);"></i> <span
+                                        style="color:var(--gold);">Foto</span>
                                 </button>
                                 <input type="file" id="adminPhotoInput" accept="image/*" style="display:none;">
                                 <button id="galleryToggle" class="gallery-toggle" type="button">
@@ -1008,50 +1133,77 @@
                         <!-- GALERIA AQUI -->
                         <div id="galleryBody" class="gallery-body">
                             <div class="gallery-grid">
-                                <div class="thumb original-photo" data-full="./img/1.jpg" data-label="Vista aérea" data-orig-key="./img/1.jpg" style="position:relative;">
+                                <div class="thumb original-photo" data-full="./img/1.jpg" data-label="Vista aérea"
+                                    data-orig-key="./img/1.jpg" style="position:relative;">
                                     <img src="./img/1.jpg" alt="Vista aérea">
                                     <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
-                                    <button class="admin-del-orig-btn" title="Remover foto" style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="admin-del-orig-btn" title="Remover foto"
+                                        style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
-                                <div class="thumb original-photo" data-full="./img/2.jpg" data-label="Área do lote" data-orig-key="./img/2.jpg" style="position:relative;">
+                                <div class="thumb original-photo" data-full="./img/2.jpg" data-label="Área do lote"
+                                    data-orig-key="./img/2.jpg" style="position:relative;">
                                     <img src="./img/2.jpg" alt="Área do lote">
                                     <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
-                                    <button class="admin-del-orig-btn" title="Remover foto" style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="admin-del-orig-btn" title="Remover foto"
+                                        style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
-                                <div class="thumb original-photo" data-full="./img/3.jpg" data-label="Entrada" data-orig-key="./img/3.jpg" style="position:relative;">
+                                <div class="thumb original-photo" data-full="./img/3.jpg" data-label="Entrada"
+                                    data-orig-key="./img/3.jpg" style="position:relative;">
                                     <img src="./img/3.jpg" alt="Entrada">
                                     <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
-                                    <button class="admin-del-orig-btn" title="Remover foto" style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="admin-del-orig-btn" title="Remover foto"
+                                        style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
-                                <div class="thumb original-photo" data-full="./img/4.jpg" data-label="Panorama" data-orig-key="./img/4.jpg" style="position:relative;">
+                                <div class="thumb original-photo" data-full="./img/4.jpg" data-label="Panorama"
+                                    data-orig-key="./img/4.jpg" style="position:relative;">
                                     <img src="./img/4.jpg" alt="Panorama">
                                     <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
-                                    <button class="admin-del-orig-btn" title="Remover foto" style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="admin-del-orig-btn" title="Remover foto"
+                                        style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
-                                <div class="thumb original-photo" data-full="./img/5.jpg" data-label="Noite" data-orig-key="./img/5.jpg" style="position:relative;">
+                                <div class="thumb original-photo" data-full="./img/5.jpg" data-label="Noite"
+                                    data-orig-key="./img/5.jpg" style="position:relative;">
                                     <img src="./img/5.jpg" alt="Noite">
                                     <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
-                                    <button class="admin-del-orig-btn" title="Remover foto" style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="admin-del-orig-btn" title="Remover foto"
+                                        style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
-                                <div class="thumb original-photo" data-full="./img/6.jpg" data-label="Detalhe" data-orig-key="./img/6.jpg" style="position:relative;">
+                                <div class="thumb original-photo" data-full="./img/6.jpg" data-label="Detalhe"
+                                    data-orig-key="./img/6.jpg" style="position:relative;">
                                     <img src="./img/6.jpg" alt="Detalhe">
                                     <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
-                                    <button class="admin-del-orig-btn" title="Remover foto" style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="admin-del-orig-btn" title="Remover foto"
+                                        style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
-                                <div class="thumb original-photo" data-full="./img/arara.jpg" data-label="Arara" data-orig-key="./img/arara.jpg" style="position:relative;">
+                                <div class="thumb original-photo" data-full="./img/arara.jpg" data-label="Arara"
+                                    data-orig-key="./img/arara.jpg" style="position:relative;">
                                     <img src="./img/arara.jpg" alt="Arara">
                                     <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
-                                    <button class="admin-del-orig-btn" title="Remover foto" style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="admin-del-orig-btn" title="Remover foto"
+                                        style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
-                                <div class="thumb original-photo" data-full="./img/8.jpg" data-label="Detalhe" data-orig-key="./img/8.jpg" style="position:relative;">
+                                <div class="thumb original-photo" data-full="./img/8.jpg" data-label="Detalhe"
+                                    data-orig-key="./img/8.jpg" style="position:relative;">
                                     <img src="./img/8.jpg" alt="Detalhe">
                                     <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
-                                    <button class="admin-del-orig-btn" title="Remover foto" style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="admin-del-orig-btn" title="Remover foto"
+                                        style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
-                                <div class="thumb original-photo" data-full="./img/9.jpg" data-label="Detalhe" data-orig-key="./img/9.jpg" style="position:relative;">
+                                <div class="thumb original-photo" data-full="./img/9.jpg" data-label="Detalhe"
+                                    data-orig-key="./img/9.jpg" style="position:relative;">
                                     <img src="./img/9.jpg" alt="Detalhe">
                                     <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
-                                    <button class="admin-del-orig-btn" title="Remover foto" style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="admin-del-orig-btn" title="Remover foto"
+                                        style="display:none; position:absolute; top:6px; right:6px; background:rgba(255,0,0,0.75); border:none; color:white; border-radius:50%; width:26px; height:26px; cursor:pointer; font-size:12px; z-index:10; align-items:center; justify-content:center;"><i
+                                            class="fa-solid fa-trash"></i></button>
                                 </div>
 
                             </div>
@@ -1064,7 +1216,7 @@
                     <section class="lux-card" data-panel="specs">
                         <div class="lux-head">
                             <div>
-                                <div class="title font-luxury text-white">Destaques</div>
+                                <div class="title font-luxury text-white">Informações do Lote</div>
                                 <div class="sub">O que importa de verdade</div>
                             </div>
                             <button class="gallery-toggle js-toggle" type="button" data-target="#specsBody">
@@ -1191,7 +1343,7 @@
                             </div>
                         </div>
                     </section>
-                    
+
                     <!-- ✅ DOCUMENTOS -->
                     <section class="lux-card" data-panel="docs">
                         <div class="lux-head">
@@ -1200,10 +1352,14 @@
                                 <div class="sub">Arquivos anexados</div>
                             </div>
                             <div style="display:flex; gap: 0.5rem; align-items:center;">
-                                <button id="adminAddDocBtn" class="gallery-toggle" type="button" title="Adicionar Documento (Admin)" style="display:none; background: rgba(197,160,125,0.12); border-color: rgba(197,160,125,0.5);">
-                                    <i class="fa-solid fa-plus mr-1" style="color: var(--gold);"></i> <span style="color:var(--gold);">Doc</span>
+                                <button id="adminAddDocBtn" class="gallery-toggle" type="button"
+                                    title="Adicionar Documento (Admin)"
+                                    style="display:none; background: rgba(197,160,125,0.12); border-color: rgba(197,160,125,0.5);">
+                                    <i class="fa-solid fa-plus mr-1" style="color: var(--gold);"></i> <span
+                                        style="color:var(--gold);">Doc</span>
                                 </button>
-                                <input type="file" id="adminDocInput" accept=".pdf,.doc,.docx,.xls,.xlsx,image/*" style="display:none;">
+                                <input type="file" id="adminDocInput" accept=".pdf,.doc,.docx,.xls,.xlsx,image/*"
+                                    style="display:none;">
                                 <button class="gallery-toggle js-toggle" type="button" data-target="#docsBody">
                                     <i class="fa-solid fa-file-pdf mr-2" style="color: var(--gold);"></i> Abrir
                                 </button>
@@ -1212,9 +1368,12 @@
 
                         <div id="docsBody" class="lux-body">
                             <div class="lux-inner">
-                                <a class="luxury-btn flex items-center justify-between group" style="padding: 1rem; width: 100%; margin-bottom: 1rem;" target="_blank" href="https://drive.google.com/drive/folders/18Iktw-iAznomKcvzRLYkuuWfrWIkvtQs?usp=drive_link">
+                                <a class="luxury-btn flex items-center justify-between group"
+                                    style="padding: 1rem; width: 100%; margin-bottom: 1rem;" target="_blank"
+                                    href="https://drive.google.com/drive/folders/18Iktw-iAznomKcvzRLYkuuWfrWIkvtQs?usp=drive_link">
                                     <span class="text-[11px] tracking-widest uppercase text-white/80">
-                                        <i class="fa-brands fa-google-drive mr-2" style="color:var(--gold)"></i> Pasta Geral do Drive
+                                        <i class="fa-brands fa-google-drive mr-2" style="color:var(--gold)"></i> Pasta
+                                        Geral do Drive
                                     </span>
                                     <i class="fa-solid fa-arrow-up-right-from-square" style="color:var(--gold)"></i>
                                 </a>
@@ -1232,19 +1391,31 @@
                 <div class="w-full max-w-smart mb-12 mt-6">
                     <div class="lux-card" style="padding: 1.5rem; background: rgba(0,0,0,0.5);">
                         <div style="text-align: center; margin-bottom: 1rem;">
-                            <h3 id="homeCommentsTitle" style="font-size: 14px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid rgba(197, 160, 125, 0.3); padding-bottom: 0.5rem; user-select: none; cursor: pointer;">Livro de Visitas</h3>
-                            <div style="font-size: 10px; opacity: 0.5; text-transform: uppercase; letter-spacing: .15em; margin-top: 0.5rem;">Deixe seu comentário sobre a propriedade (<span id="homeCommentCount">0</span>)</div>
+                            <h3 id="homeCommentsTitle"
+                                style="font-size: 14px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid rgba(197, 160, 125, 0.3); padding-bottom: 0.5rem; user-select: none; cursor: pointer;">
+                                Livro de Visitas</h3>
+                            <div
+                                style="font-size: 10px; opacity: 0.5; text-transform: uppercase; letter-spacing: .15em; margin-top: 0.5rem;">
+                                Deixe seu comentário sobre a propriedade (<span id="homeCommentCount">0</span>)</div>
                         </div>
-                        
-                        <div id="homeCommentsList" style="max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; scrollbar-width: thin; scrollbar-color: var(--gold) transparent;">
+
+                        <div id="homeCommentsList"
+                            style="max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; scrollbar-width: thin; scrollbar-color: var(--gold) transparent;">
                             <!-- JS injects here -->
                         </div>
 
                         <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem;">
-                            <input type="text" id="homeCommentName" placeholder="Seu Nome" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; border-radius: 0.75rem; color: white; font-size: 13px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
-                            <textarea id="homeCommentText" placeholder="Deixe um comentário público aqui..." rows="3" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; border-radius: 0.75rem; color: white; font-size: 13px; outline: none; resize: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
-                            
-                            <button id="submitHomeComment" class="luxury-btn gold-filled mt-2" style="padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-size: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; width: 100%;">Publicar</button>
+                            <input type="text" id="homeCommentName" placeholder="Seu Nome"
+                                style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; border-radius: 0.75rem; color: white; font-size: 13px; outline: none; transition: border-color 0.3s;"
+                                onfocus="this.style.borderColor='var(--gold)'"
+                                onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                            <textarea id="homeCommentText" placeholder="Deixe um comentário público aqui..." rows="3"
+                                style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 1rem; border-radius: 0.75rem; color: white; font-size: 13px; outline: none; resize: none; transition: border-color 0.3s;"
+                                onfocus="this.style.borderColor='var(--gold)'"
+                                onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
+
+                            <button id="submitHomeComment" class="luxury-btn gold-filled mt-2"
+                                style="padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-size: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; width: 100%;">Publicar</button>
                         </div>
                     </div>
                 </div>
@@ -1330,11 +1501,17 @@
     <div id="loginOverlay">
         <div class="login-box">
             <i class="fa-solid fa-crown" style="font-size: 32px; color: var(--gold); margin-bottom: 1rem;"></i>
-            <h2 style="font-family: 'Cinzel', serif; color: white; letter-spacing: 0.2em; text-transform: uppercase; font-size: 16px;">Acesso Restrito</h2>
-            <p style="font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.5rem;">Insira a credencial</p>
+            <h2
+                style="font-family: 'Cinzel', serif; color: white; letter-spacing: 0.2em; text-transform: uppercase; font-size: 16px;">
+                Acesso Restrito</h2>
+            <p
+                style="font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.5rem;">
+                Insira a credencial</p>
             <input type="password" id="adminPwdInput" class="login-input" placeholder="SENHA" />
-            <button id="adminLoginBtn" class="luxury-btn gold-filled" style="width: 100%; padding: 0.8rem; border-radius: 0.5rem; font-size: 12px; letter-spacing: 0.1em;">AUTENTICAR</button>
-            <button id="adminCancelBtn" style="margin-top: 1rem; background: transparent; border: none; color: rgba(255,255,255,0.5); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer;">Cancelar</button>
+            <button id="adminLoginBtn" class="luxury-btn gold-filled"
+                style="width: 100%; padding: 0.8rem; border-radius: 0.5rem; font-size: 12px; letter-spacing: 0.1em;">AUTENTICAR</button>
+            <button id="adminCancelBtn"
+                style="margin-top: 1rem; background: transparent; border: none; color: rgba(255,255,255,0.5); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer;">Cancelar</button>
         </div>
     </div>
 
@@ -1342,22 +1519,33 @@
     <div id="adminPanelOverlay">
         <div class="admin-modal">
             <div class="admin-sidebar">
-                <div style="padding: 1rem 0 2rem 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem;">
+                <div
+                    style="padding: 1rem 0 2rem 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 1rem;">
                     <i class="fa-solid fa-robot" style="font-size: 24px; color: var(--gold);"></i>
-                    <div style="font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 0.2em; color: white; margin-top: 0.5rem;">Aroeira OS</div>
+                    <div
+                        style="font-family: 'Cinzel', serif; font-size: 14px; letter-spacing: 0.2em; color: white; margin-top: 0.5rem;">
+                        Aroeira OS</div>
                     <div style="font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em;">Dashboard</div>
                 </div>
-                <button class="admin-sidebar-btn active" data-tab="tab-overview"><i class="fa-solid fa-chart-line"></i> Visão Geral</button>
-                <button class="admin-sidebar-btn" data-tab="tab-gallery"><i class="fa-solid fa-images"></i> Galeria</button>
-                <button class="admin-sidebar-btn" data-tab="tab-comments"><i class="fa-solid fa-comments"></i> Moderação</button>
-                <button class="admin-sidebar-btn" data-tab="tab-promo"><i class="fa-solid fa-star"></i> Destaques</button>
-                <button class="admin-sidebar-btn" data-tab="tab-settings"><i class="fa-solid fa-gear"></i> Configurações</button>
+                <button class="admin-sidebar-btn active" data-tab="tab-overview"><i class="fa-solid fa-chart-line"></i>
+                    Visão Geral</button>
+                <button class="admin-sidebar-btn" data-tab="tab-gallery"><i class="fa-solid fa-images"></i>
+                    Galeria</button>
+                <button class="admin-sidebar-btn" data-tab="tab-comments"><i class="fa-solid fa-comments"></i>
+                    Moderação</button>
+                <button class="admin-sidebar-btn" data-tab="tab-promo"><i class="fa-solid fa-star"></i>
+                    Destaques</button>
+                <button class="admin-sidebar-btn" data-tab="tab-settings"><i class="fa-solid fa-gear"></i>
+                    Configurações</button>
                 <div style="flex:1"></div>
-                <button id="adminLogoutBtn" class="admin-sidebar-btn" style="color: #ff4444;"><i class="fa-solid fa-power-off"></i> Encerrar Sessão</button>
+                <button id="adminLogoutBtn" class="admin-sidebar-btn" style="color: #ff4444;"><i
+                        class="fa-solid fa-power-off"></i> Encerrar Sessão</button>
             </div>
-            
+
             <div class="admin-content">
-                <button id="adminCloseBtn" style="position: absolute; top: 1.5rem; right: 2rem; background: transparent; border: none; font-size: 20px; color: rgba(255,255,255,0.5); cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
+                <button id="adminCloseBtn"
+                    style="position: absolute; top: 1.5rem; right: 2rem; background: transparent; border: none; font-size: 20px; color: rgba(255,255,255,0.5); cursor: pointer;"><i
+                        class="fa-solid fa-xmark"></i></button>
 
                 <!-- TAB VISÃO GERAL -->
                 <div id="tab-overview" class="admin-tab active">
@@ -1368,7 +1556,8 @@
                         <div class="admin-stat-card">
                             <div class="admin-stat-label">Visualizações Hoje</div>
                             <div class="admin-stat-val">1.204</div>
-                            <div style="font-size: 10px; color: #44ff44;"><i class="fa-solid fa-arrow-trend-up"></i> +12%</div>
+                            <div style="font-size: 10px; color: #44ff44;"><i class="fa-solid fa-arrow-trend-up"></i>
+                                +12%</div>
                         </div>
                         <div class="admin-stat-card">
                             <div class="admin-stat-label">Recados da Home</div>
@@ -1393,10 +1582,14 @@
                 <div id="tab-gallery" class="admin-tab">
                     <div class="admin-header">
                         <h2 class="admin-title">Gestão de Galeria</h2>
-                        <button class="luxury-btn gold-filled" style="padding: 0.5rem 1rem; font-size: 10px;" onclick="document.getElementById('adminAddPhotoBtn').click()">+ Adicionar Foto</button>
+                        <button class="luxury-btn gold-filled" style="padding: 0.5rem 1rem; font-size: 10px;"
+                            onclick="document.getElementById('adminAddPhotoBtn').click()">+ Adicionar Foto</button>
                     </div>
-                    <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 1rem;">Gerencie as fotos da galeria. Você pode ocultar as fotos nativas ou excluir as fotos anexadas (Uploads).</p>
-                    <div id="admin-photo-list" style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--gold) transparent;"></div>
+                    <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 1rem;">Gerencie as fotos da
+                        galeria. Você pode ocultar as fotos nativas ou excluir as fotos anexadas (Uploads).</p>
+                    <div id="admin-photo-list"
+                        style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--gold) transparent;">
+                    </div>
                 </div>
 
                 <!-- TAB MODERAÇÃO -->
@@ -1404,12 +1597,20 @@
                     <div class="admin-header">
                         <h2 class="admin-title">Moderação de Comentários</h2>
                     </div>
-                    <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 1rem;">Histórico completo de comentários na plataforma. A exclusão os removerá permanentemente.</p>
-                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-                        <button class="admin-sidebar-btn active" style="padding: 0.5rem;" onclick="loadAdminComments('fotos'); this.classList.add('active'); this.nextElementSibling.classList.remove('active')">Fotos da Galeria</button>
-                        <button class="admin-sidebar-btn" style="padding: 0.5rem;" onclick="loadAdminComments('livro'); this.classList.add('active'); this.previousElementSibling.classList.remove('active')">Livro de Visitas</button>
+                    <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 1rem;">Histórico completo de
+                        comentários na plataforma. A exclusão os removerá permanentemente.</p>
+                    <div
+                        style="display: flex; gap: 1rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+                        <button class="admin-sidebar-btn active" style="padding: 0.5rem;"
+                            onclick="loadAdminComments('fotos'); this.classList.add('active'); this.nextElementSibling.classList.remove('active')">Fotos
+                            da Galeria</button>
+                        <button class="admin-sidebar-btn" style="padding: 0.5rem;"
+                            onclick="loadAdminComments('livro'); this.classList.add('active'); this.previousElementSibling.classList.remove('active')">Livro
+                            de Visitas</button>
                     </div>
-                    <div id="admin-comment-list" style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--gold) transparent;"></div>
+                    <div id="admin-comment-list"
+                        style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--gold) transparent;">
+                    </div>
                 </div>
 
                 <!-- TAB DESTAQUES -->
@@ -1417,26 +1618,44 @@
                     <div class="admin-header">
                         <h2 class="admin-title">Destaques Laterais</h2>
                     </div>
-                    <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 1rem;">Organize links agrupados por categorias no canto superior esquerdo.</p>
-                    
-                    <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
-                        <h3 id="adminPromoFormTitle" style="font-size: 12px; color: var(--gold); margin-bottom: 1rem;">Adicionar Novo Destaque</h3>
+                    <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 1rem;">Organize links
+                        agrupados por categorias no canto superior esquerdo.</p>
+
+                    <div
+                        style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1.5rem;">
+                        <h3 id="adminPromoFormTitle" style="font-size: 12px; color: var(--gold); margin-bottom: 1rem;">
+                            Adicionar Novo Destaque</h3>
                         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
                             <input type="hidden" id="adminPromoEditId" value="-1">
-                            <input type="text" id="adminPromoCat" list="promoCategoriesList" class="login-input" style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;" placeholder="Categoria (Ex: Tour de Moto)">
+                            <input type="text" id="adminPromoCat" list="promoCategoriesList" class="login-input"
+                                style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;"
+                                placeholder="Categoria (Ex: Tour de Moto)">
                             <datalist id="promoCategoriesList"></datalist>
-                            <input type="text" id="adminPromoTitle" class="login-input" style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;" placeholder="Título (Ex: Loteamento VIP)">
-                            <input type="text" id="adminPromoSub" class="login-input" style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;" placeholder="Subtítulo">
-                            <input type="text" id="adminPromoLink" class="login-input" style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;" placeholder="Link (Ex: https://youtube...)">
+                            <input type="text" id="adminPromoTitle" class="login-input"
+                                style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;"
+                                placeholder="Título (Ex: Loteamento VIP)">
+                            <input type="text" id="adminPromoSub" class="login-input"
+                                style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;"
+                                placeholder="Subtítulo">
+                            <input type="text" id="adminPromoLink" class="login-input"
+                                style="width: 100%; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); padding: 0.6rem; border-radius: 0.5rem; color: white;"
+                                placeholder="Link (Ex: https://youtube...)">
                             <div style="display: flex; gap: 0.5rem;">
-                                <button id="adminPromoBtnSalvar" class="luxury-btn gold-filled mt-2" onclick="savePromoLinkBtn()" style="flex:1; padding: 0.6rem; font-size: 11px; border-radius: 0.5rem; text-transform: uppercase;">Adicionar Link</button>
-                                <button id="adminPromoBtnCancelar" class="luxury-btn mt-2" onclick="cancelEditPromoLink()" style="display:none; flex:1; padding: 0.6rem; font-size: 11px; border-radius: 0.5rem; text-transform: uppercase; background:rgba(255,255,255,0.1); color:white; border-color:transparent;">Cancelar</button>
+                                <button id="adminPromoBtnSalvar" class="luxury-btn gold-filled mt-2"
+                                    onclick="savePromoLinkBtn()"
+                                    style="flex:1; padding: 0.6rem; font-size: 11px; border-radius: 0.5rem; text-transform: uppercase;">Adicionar
+                                    Link</button>
+                                <button id="adminPromoBtnCancelar" class="luxury-btn mt-2"
+                                    onclick="cancelEditPromoLink()"
+                                    style="display:none; flex:1; padding: 0.6rem; font-size: 11px; border-radius: 0.5rem; text-transform: uppercase; background:rgba(255,255,255,0.1); color:white; border-color:transparent;">Cancelar</button>
                             </div>
                         </div>
                     </div>
 
                     <h3 style="font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 0.5rem;">Links Ativos</h3>
-                    <div id="admin-promo-list" style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 250px; overflow-y: auto;"></div>
+                    <div id="admin-promo-list"
+                        style="display: flex; flex-direction: column; gap: 0.5rem; max-height: 250px; overflow-y: auto;">
+                    </div>
                 </div>
 
                 <!-- TAB SISTEMA -->
@@ -1445,23 +1664,35 @@
                         <h2 class="admin-title">Sistema & Logs</h2>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
-                        <div class="admin-stat-card" style="text-align: left; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="admin-stat-card"
+                            style="text-align: left; display: flex; justify-content: space-between; align-items: center;">
                             <div>
-                                <h4 style="color: white; font-size: 14px; margin-bottom: 0.5rem;">Limpar Cache Global</h4>
-                                <p style="font-size: 11px; opacity: 0.6;">Isso apagará TODAS as fotos cadastradas e todos os comentários e recados da página. Restaura o site ao original.</p>
+                                <h4 style="color: white; font-size: 14px; margin-bottom: 0.5rem;">Limpar Cache Global
+                                </h4>
+                                <p style="font-size: 11px; opacity: 0.6;">Isso apagará TODAS as fotos cadastradas e
+                                    todos os comentários e recados da página. Restaura o site ao original.</p>
                             </div>
-                            <button class="luxury-btn" style="border-color: #ff4444; color: #ff4444;" onclick="if(confirm('Tem certeza absoluta? Isso apagará todas as fotos anexadas e comentários para sempre!')){ localStorage.clear(); window.location.reload(); }"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Resetar</button>
+                            <button class="luxury-btn" style="border-color: #ff4444; color: #ff4444;"
+                                onclick="if(confirm('Tem certeza absoluta? Isso apagará todas as fotos anexadas e comentários para sempre!')){ localStorage.clear(); window.location.reload(); }"><i
+                                    class="fa-solid fa-triangle-exclamation mr-2"></i> Resetar</button>
                         </div>
-                        <div class="admin-stat-card" style="text-align: left; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="admin-stat-card"
+                            style="text-align: left; display: flex; justify-content: space-between; align-items: center;">
                             <div>
-                                <h4 style="color: white; font-size: 14px; margin-bottom: 0.5rem;">Forçar Backup Nuvem</h4>
-                                <p style="font-size: 11px; opacity: 0.6;">Gera um log de download de todos os conteúdos anexos.</p>
+                                <h4 style="color: white; font-size: 14px; margin-bottom: 0.5rem;">Forçar Backup Nuvem
+                                </h4>
+                                <p style="font-size: 11px; opacity: 0.6;">Gera um log de download de todos os conteúdos
+                                    anexos.</p>
                             </div>
-                            <button class="luxury-btn" onclick="alert('Funcionalidade simulada em ambiente local.')"><i class="fa-solid fa-cloud-arrow-up mr-2"></i> Backup</button>
+                            <button class="luxury-btn" onclick="alert('Funcionalidade simulada em ambiente local.')"><i
+                                    class="fa-solid fa-cloud-arrow-up mr-2"></i> Backup</button>
                         </div>
                     </div>
-                    <h3 style="margin-top: 2rem; font-size: 12px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">Eventos Recentes</h3>
-                    <div style="background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 0.5rem; font-family: monospace; font-size: 10px; color: #44ff44; max-height: 150px; overflow-y: auto;">
+                    <h3
+                        style="margin-top: 2rem; font-size: 12px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">
+                        Eventos Recentes</h3>
+                    <div
+                        style="background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 0.5rem; font-family: monospace; font-size: 10px; color: #44ff44; max-height: 150px; overflow-y: auto;">
                         [SYS] Login efetuado pelo Admin<br>
                         [MOD] Permissões elevadas<br>
                         [SYS] Leitura de localStorage concluída com sucesso<br>
@@ -1489,8 +1720,8 @@
         window.addEventListener('load', () => {
             const tl = gsap.timeline();
             tl.to("#loader-text", { opacity: 1, scale: 1.2, duration: 2, letterSpacing: "0.2em", ease: "power4.inOut" })
-              .to("#loader-subtext", { opacity: 1, duration: 1 }, "-=1")
-              .to("#loader-action", { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
+                .to("#loader-subtext", { opacity: 1, duration: 1 }, "-=1")
+                .to("#loader-action", { opacity: 1, y: 0, duration: 1, ease: "power2.out" });
 
             document.getElementById('btn-start').addEventListener('click', () => {
                 const audio = document.getElementById('welcome-audio');
@@ -1514,13 +1745,13 @@
 
         // ─── Admin: adicionar/remover fotos ─────────────────────────────
         const adminAddPhotoBtn = document.getElementById('adminAddPhotoBtn');
-        const adminPhotoInput  = document.getElementById('adminPhotoInput');
-        const galleryGrid      = document.querySelector('.gallery-grid');
+        const adminPhotoInput = document.getElementById('adminPhotoInput');
+        const galleryGrid = document.querySelector('.gallery-grid');
 
         // ─── Admin: adicionar/remover docs ──────────────────────────────
         const adminAddDocBtn = document.getElementById('adminAddDocBtn');
-        const adminDocInput  = document.getElementById('adminDocInput');
-        const docsList       = document.getElementById('docsList');
+        const adminDocInput = document.getElementById('adminDocInput');
+        const docsList = document.getElementById('docsList');
 
         // Lightbox & Comments
         const thumbs = Array.from(document.querySelectorAll('.thumb'));
@@ -1688,7 +1919,7 @@
         dbReq.onsuccess = (e) => {
             idbDocs = e.target.result;
             loadAdminDocs();
-            if(typeof updateDashboardStats === 'function') updateDashboardStats();
+            if (typeof updateDashboardStats === 'function') updateDashboardStats();
         };
 
         function getSavedDocs(callback) {
@@ -1717,7 +1948,7 @@
         }
 
         function loadAdminDocs() {
-            if(!docsList) return;
+            if (!docsList) return;
             getSavedDocs((saved) => {
                 docsList.innerHTML = '';
                 if (saved.length === 0) {
@@ -1729,7 +1960,7 @@
                     el.style.cssText = "display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); padding: 0.8rem 1rem; border-radius: 0.75rem; transition: background 0.3s;";
                     el.onmouseover = () => el.style.background = 'rgba(255,255,255,0.06)';
                     el.onmouseout = () => el.style.background = 'rgba(255,255,255,0.02)';
-                    
+
                     let delBtn = '';
                     if (isAdmin) {
                         delBtn = `<button class="admin-del-doc-btn" data-id="${doc.id}" style="background:transparent; border:none; color:#ff4444; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>`;
@@ -1769,7 +2000,7 @@
             const file = e.target.files[0];
             if (!file) return;
             const label = prompt('Dê um título para este documento (ex: Matrícula, Planta...):', file.name.replace(/\.[^.]+$/, '')) || 'Novo Documento';
-            
+
             // Render a quick visual queue since big files take a second to read
             adminAddDocBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin mr-1" style="color: var(--gold);"></i> <span style="color:var(--gold);">Lendo...</span>`;
 
@@ -1777,14 +2008,14 @@
             reader.onload = (ev) => {
                 const base64 = ev.target.result;
                 const newDoc = { data: base64, label, addedAt: new Date().toISOString() };
-                
+
                 saveDocToDb(newDoc, () => {
                     adminAddDocBtn.innerHTML = `<i class="fa-solid fa-plus mr-1" style="color: var(--gold);"></i> <span style="color:var(--gold);">Doc</span>`;
                     const docsBody = document.getElementById('docsBody');
                     if (docsBody && !docsBody.classList.contains('open')) {
                         docsBody.classList.add('open');
                         const toggleBtn = document.querySelector('[data-target="#docsBody"]');
-                        if(toggleBtn) toggleBtn.innerHTML = `<i class="fa-solid fa-file-pdf mr-2" style="color: var(--gold);"></i>Fechar`;
+                        if (toggleBtn) toggleBtn.innerHTML = `<i class="fa-solid fa-file-pdf mr-2" style="color: var(--gold);"></i>Fechar`;
                     }
                     loadAdminDocs();
                     if (typeof updateDashboardStats === 'function') updateDashboardStats();
@@ -1819,10 +2050,10 @@
             if (typeof loadAdminComments === 'function') loadAdminComments('fotos');
         }
         function closeAdminDashboard() { document.getElementById('adminPanelOverlay').classList.remove('open'); }
-        
+
         document.getElementById('adminCancelBtn').addEventListener('click', closeLoginModal);
         document.getElementById('adminCloseBtn').addEventListener('click', closeAdminDashboard);
-        
+
         document.getElementById('adminLoginBtn').addEventListener('click', () => {
             const pwd = document.getElementById('adminPwdInput').value;
             if (pwd === '121518') {
@@ -1869,18 +2100,18 @@
         function updateDashboardStats() {
             // Count home comments
             const home = commentsData['home_page'] ? commentsData['home_page'].length : 0;
-            if(document.getElementById('dash-home-comments')) document.getElementById('dash-home-comments').textContent = home;
-            
+            if (document.getElementById('dash-home-comments')) document.getElementById('dash-home-comments').textContent = home;
+
             // Count photo comments
             let photoComments = 0;
             for (const key in commentsData) {
                 if (key !== 'home_page') photoComments += commentsData[key].length;
             }
-            if(document.getElementById('dash-foto-comments')) document.getElementById('dash-foto-comments').textContent = photoComments;
-            
+            if (document.getElementById('dash-foto-comments')) document.getElementById('dash-foto-comments').textContent = photoComments;
+
             // Count extra photos
             const extraPhotos = JSON.parse(localStorage.getItem('aroeira_admin_photos') || '[]');
-            if(document.getElementById('dash-fotos-extras')) document.getElementById('dash-fotos-extras').textContent = extraPhotos.length;
+            if (document.getElementById('dash-fotos-extras')) document.getElementById('dash-fotos-extras').textContent = extraPhotos.length;
 
             // Count extra docs (IndexedDB version)
             if (idbDocs && document.getElementById('dash-docs-extras')) {
@@ -2019,7 +2250,7 @@
             if (!homeCommentsList) return;
             homeCommentsList.innerHTML = '';
             const comments = commentsData['home_page'] || [];
-            
+
             if (homeCommentCountSpan) {
                 homeCommentCountSpan.textContent = comments.length;
             }
@@ -2032,7 +2263,7 @@
             comments.forEach((c, index) => {
                 const item = document.createElement('div');
                 item.style.cssText = "display: flex; flex-direction: column; gap: 0.3rem; background: rgba(255,255,255,0.03); padding: 0.8rem 1rem; border-radius: 0.5rem; border-left: 2px solid var(--gold); position: relative;";
-                
+
                 let deleteBtnHtml = '';
                 if (isAdmin) {
                     deleteBtnHtml = `<button class="delete-home-comment-btn" data-index="${index}" style="position: absolute; right: 10px; top: 10px; background: none; border: none; color: #ff4444; cursor: pointer; padding: 5px;"><i class="fa-solid fa-trash"></i></button>`;
@@ -2290,10 +2521,10 @@
         // Funções adicionais em Tempo Real para o Painel Admin
         function loadAdminComments(type) {
             const list = document.getElementById('admin-comment-list');
-            if(!list) return;
+            if (!list) return;
             list.innerHTML = '';
             let allComments = [];
-            
+
             if (type === 'livro') {
                 const home = commentsData['home_page'] || [];
                 home.forEach((c, idx) => {
@@ -2301,7 +2532,7 @@
                 });
             } else {
                 for (const key in commentsData) {
-                    if(key !== 'home_page') {
+                    if (key !== 'home_page') {
                         const arr = commentsData[key];
                         arr.forEach((c, idx) => {
                             allComments.push({ ...c, source: key, originalIndex: idx, label: 'Galeria' });
@@ -2309,12 +2540,12 @@
                     }
                 }
             }
-            
+
             if (allComments.length === 0) {
                 list.innerHTML = '<div style="font-size: 11px; color: rgba(255,255,255,0.4); font-style: italic; padding: 1rem 0;">Nenhum comentário cadastrado neste momento.</div>';
                 return;
             }
-            
+
             allComments.reverse().forEach(c => {
                 const item = document.createElement('div');
                 item.style.cssText = "display: flex; flex-direction: column; gap: 0.3rem; background: rgba(255,255,255,0.03); padding: 0.8rem 1rem; border-radius: 0.5rem; border-left: 2px solid var(--gold); position: relative; margin-bottom: 0.5rem;";
@@ -2328,7 +2559,7 @@
                 `;
                 list.appendChild(item);
             });
-            
+
             list.querySelectorAll('.delete-admin-comment-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     if (confirm('Ação irreversível. Tem certeza que deseja apagar permanentemente?')) {
@@ -2339,7 +2570,7 @@
                         localStorage.setItem('aroeira_comments', JSON.stringify(commentsData));
                         loadAdminComments(type); // atualização em tempo real
                         updateDashboardStats(); // atualização em tempo real
-                        renderComments(); 
+                        renderComments();
                         renderHomeComments();
                     }
                 });
@@ -2348,15 +2579,15 @@
 
         // Registrar o carregamento das abas
         document.querySelectorAll('.admin-sidebar-btn[data-tab="tab-comments"]').forEach(b => {
-             b.addEventListener('click', () => { loadAdminComments('fotos'); });
+            b.addEventListener('click', () => { loadAdminComments('fotos'); });
         });
-        
+
         // Painel: Carregamento dinâmico da Tabela de Fotos
         function loadAdminPhotosList() {
             const list = document.getElementById('admin-photo-list');
-            if(!list) return;
+            if (!list) return;
             list.innerHTML = '';
-            
+
             let allPhotos = [];
             const hiddenOriginals = getHiddenOriginals();
             document.querySelectorAll('.thumb.original-photo').forEach((el, idx) => {
@@ -2366,25 +2597,25 @@
                 const isHidden = hiddenOriginals.includes(key);
                 allPhotos.push({ src, label, type: 'original', key, isHidden });
             });
-            
+
             const extraPhotos = JSON.parse(localStorage.getItem('aroeira_admin_photos') || '[]');
             extraPhotos.forEach((p, idx) => {
                 allPhotos.push({ src: p.src, label: p.label, type: 'extra', index: idx, isHidden: false });
             });
-            
+
             if (allPhotos.length === 0) {
                 list.innerHTML = '<div style="font-size: 11px; color: rgba(255,255,255,0.4); font-style: italic; padding: 1rem 0;">Nenhuma foto encontrada.</div>';
                 return;
             }
-            
+
             allPhotos.forEach(p => {
                 const item = document.createElement('div');
-                item.style.cssText = "display: flex; gap: 1rem; background: rgba(255,255,255,0.03); padding: 0.8rem; border-radius: 0.5rem; align-items: center; border-left: 2px solid " + (p.type==='extra' ? 'var(--gold)' : '#555') + "; margin-bottom: 0.5rem;";
-                
-                const deleteBtnHtml = p.type === 'extra' 
+                item.style.cssText = "display: flex; gap: 1rem; background: rgba(255,255,255,0.03); padding: 0.8rem; border-radius: 0.5rem; align-items: center; border-left: 2px solid " + (p.type === 'extra' ? 'var(--gold)' : '#555') + "; margin-bottom: 0.5rem;";
+
+                const deleteBtnHtml = p.type === 'extra'
                     ? `<button class="luxury-btn delete-admin-photo-btn" data-index="${p.index}" style="padding: 5px; border-color: rgba(255,44,44,0.3); color: #ff4444; background: rgba(255,44,44,0.1); cursor: pointer;"><i class="fa-solid fa-trash"></i></button>`
                     : `<button class="luxury-btn hide-admin-orig-btn" data-key="${p.key}" style="padding: 5px; border-color: rgba(255,255,255,0.2); color: ${p.isHidden ? '#44ff44' : '#ff4444'}; background: transparent; width: 32px; cursor: pointer;" title="Visibilidade na Home"><i class="fa-solid ${p.isHidden ? 'fa-eye' : 'fa-eye-slash'}"></i></button>`;
-                
+
                 item.innerHTML = `
                     <div style="width: 50px; height: 50px; border-radius: 0.3rem; overflow: hidden; background: #000; flex-shrink: 0;">
                         <img src="${p.src}" style="width: 100%; height: 100%; object-fit: cover;">
@@ -2399,7 +2630,7 @@
                 `;
                 list.appendChild(item);
             });
-            
+
             list.querySelectorAll('.delete-admin-photo-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     if (confirm('Deseja apagar permanentemente esta foto?')) {
@@ -2414,7 +2645,7 @@
                     }
                 });
             });
-            
+
             list.querySelectorAll('.hide-admin-orig-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const key = e.currentTarget.getAttribute('data-key');
@@ -2428,9 +2659,9 @@
                 });
             });
         }
-        
+
         document.querySelectorAll('.admin-sidebar-btn[data-tab="tab-gallery"]').forEach(b => {
-             b.addEventListener('click', () => { loadAdminPhotosList(); });
+            b.addEventListener('click', () => { loadAdminPhotosList(); });
         });
 
         // ─── Promo Link Lateral JS ───
@@ -2454,10 +2685,10 @@
                 Array.from(container.children).forEach(child => {
                     if (child.tagName !== 'STYLE') container.removeChild(child);
                 });
-                
+
                 const groupedData = data.reduce((acc, item) => {
                     const cat = item.category || "Recomendados";
-                    if(!acc[cat]) acc[cat] = [];
+                    if (!acc[cat]) acc[cat] = [];
                     acc[cat].push(item);
                     return acc;
                 }, {});
@@ -2467,16 +2698,16 @@
                     header.style.cursor = 'pointer';
                     header.className = 'group';
                     header.innerHTML = `<h3 style="font-family: 'Cinzel', serif; color: #FFBF00; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 0.4rem; margin-top: 0.8rem; display: flex; align-items: center; gap: 0.5rem; user-select: none;" class="transition-all duration-300 hover:scale-110 origin-left cursor-pointer drop-shadow-sm"><i class="fa-solid fa-folder transition-all duration-300"></i> ${catName}</h3>`;
-                    
-                    header.onclick = function() {
+
+                    header.onclick = function () {
                         const content = this.nextElementSibling;
                         const icon = this.querySelector('i.fa-solid');
                         if (content.style.maxHeight !== '0px' && content.style.maxHeight) {
                             content.style.maxHeight = '0px'; content.style.opacity = '0'; content.style.marginTop = '0';
-                            if(icon) { icon.classList.remove('fa-folder-open'); icon.classList.add('fa-folder'); }
+                            if (icon) { icon.classList.remove('fa-folder-open'); icon.classList.add('fa-folder'); }
                         } else {
                             content.style.maxHeight = content.scrollHeight + "px"; content.style.opacity = '1'; content.style.marginTop = '0.5rem';
-                            if(icon) { icon.classList.remove('fa-folder'); icon.classList.add('fa-folder-open'); }
+                            if (icon) { icon.classList.remove('fa-folder'); icon.classList.add('fa-folder-open'); }
                         }
                     };
 
@@ -2531,21 +2762,21 @@
             }
 
             const datalist = document.getElementById('promoCategoriesList');
-            if(datalist) {
-                 datalist.innerHTML = '';
-                 const uniqueCats = [...new Set(data.map(item => item.category).filter(c => c))];
-                 uniqueCats.forEach(cat => {
-                     const opt = document.createElement('option');
-                     opt.value = cat;
-                     datalist.appendChild(opt);
-                 });
+            if (datalist) {
+                datalist.innerHTML = '';
+                const uniqueCats = [...new Set(data.map(item => item.category).filter(c => c))];
+                uniqueCats.forEach(cat => {
+                    const opt = document.createElement('option');
+                    opt.value = cat;
+                    datalist.appendChild(opt);
+                });
             }
         }
 
         function editPromoLink(index) {
             const data = getPromoData();
             const item = data[index];
-            if(!item) return;
+            if (!item) return;
             document.getElementById('adminPromoEditId').value = index;
             document.getElementById('adminPromoCat').value = item.category || "";
             document.getElementById('adminPromoTitle').value = item.title;
@@ -2555,7 +2786,7 @@
             document.getElementById('adminPromoBtnSalvar').textContent = "Salvar Alterações";
             document.getElementById('adminPromoBtnCancelar').style.display = "block";
             const adminPanel = document.querySelector('.admin-content');
-            if(adminPanel) adminPanel.scrollTop = 0;
+            if (adminPanel) adminPanel.scrollTop = 0;
         }
 
         function cancelEditPromoLink() {
@@ -2591,7 +2822,7 @@
         }
 
         function removePromoLink(index) {
-            if(confirm('Remover este link de destaque?')) {
+            if (confirm('Remover este link de destaque?')) {
                 const data = getPromoData();
                 data.splice(index, 1);
                 localStorage.setItem('aroeira_promo', JSON.stringify(data));
@@ -2601,7 +2832,7 @@
 
 
         // ─── Animação de Estrelas Douradas Caindo ───
-        (function() {
+        (function () {
             const canvas = document.getElementById('star-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -2620,7 +2851,7 @@
             class Star {
                 constructor() {
                     this.reset();
-                    this.y = Math.random() * -height; 
+                    this.y = Math.random() * -height;
                 }
 
                 reset() {
@@ -2657,7 +2888,7 @@
                     ctx.fillStyle = this.color;
                     ctx.shadowBlur = 10;
                     ctx.shadowColor = this.color;
-                    
+
                     // Draw a 5-point star
                     const spikes = 5;
                     const outerRadius = this.size * 2;
