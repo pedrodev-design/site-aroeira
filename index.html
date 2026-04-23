@@ -2936,8 +2936,7 @@
         // Este array contém os dados que aparecem para TODOS os usuários (Virtual/Global)
         // O desenvolvedor atualiza este array quando o admin envia o código de publicação.
         const GLOBAL_PROMO_DATA = [
-            { "title": "Chácara 4.000m2 | Trindade - GO", "sub": "4.000m² de oportunidade", "link": "https://www.youtube.com/shorts/VY9CQ8LlC4c", "category": "Terrenos Recomendados" },
-            { "title": "Tatuagem: Veja como é feita", "sub": "Arte e Profissionalismo", "link": "https://www.youtube.com/@LiaAssistenteVirtual-m4", "category": "Recomendados" },
+            { "title": "Tatuagem: Veja como é feita", "sub": "Arte e Profissionalismo", "link": "https://www.youtube.com/watch?v=fpOr_w3JIVU", "category": "Recomendados" },
             { "title": "Lelo Jorge", "sub": "Apresentação Especial", "link": "https://www.instagram.com/p/DWRz0LCkRBy/", "category": "Recomendados" },
             { "title": "Pular corda", "sub": "Fitness no campo", "link": "https://www.youtube.com/shorts/lt0RG8kBKno", "category": "Esportes" },
             { "title": "Aventura", "sub": "Trilhas Radicais", "link": "https://www.youtube.com/watch?v=1-D9VJRyc34", "category": "Esportes" },
@@ -2945,7 +2944,8 @@
             { "title": "ANDAR DE UMA RODA", "sub": "Equilíbrio", "link": "https://www.youtube.com/watch?v=OrlRU6liumU&t=280s", "category": "Esportes" },
             { "title": "Montanha russa", "sub": "Beto Carrero", "link": "https://www.dropbox.com/home/TUDO%20NOVO%202024/BETO%20CARRERO%20ABRIL%202024/FOTOS%20DAS%20F%C3%89RIAS/2025-08?preview=MARCIO+GIOVANNA.mov", "category": "Esportes" },
             { "title": "Gato endemoniado", "sub": "Diversão", "link": "https://www.youtube.com/watch?v=-3q5IdpxVLM", "category": "Humor" },
-            { "title": "Nossos canais: Podcast", "sub": "Entrevistas e Dicas", "link": "https://www.youtube.com/@LiaAssistenteVirtual-m4/posts", "category": "Podcast" }
+            { "title": "Nossos canais: Podcast", "sub": "Entrevistas e Dicas", "link": "https://www.youtube.com/@LiaAssistenteVirtual-m4/posts", "category": "Podcast" },
+            { "category": "Terrenos Recomendados", "title": "CHÁCARA TRINDADE", "sub": "", "link": "https://youtu.be/MP4pISqNEA4" }
         ];
 
         function getPromoData() {
@@ -3278,7 +3278,7 @@
                     this.color = data.color;
                     this.url = data.url;
                     this.size = 35 + Math.random() * 15;
-                    this.speed = 2.2 + Math.random() * 3.0;
+                    this.speed = 0.8 + Math.random() * 1.2;
                     this.rotation = Math.random() * Math.PI * 2;
                     this.rotationSpeed = (Math.random() - 0.5) * 0.08;
                 }
@@ -3465,7 +3465,7 @@
             document.body.prepend(canvas);
             const ctx = canvas.getContext('2d');
             let width, height, columns;
-            const fontSize = 16;
+            const fontSize = 24; // Increased from 16
             let drops = [];
             const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789アカサタナハマヤラワガザダバパイキシチニヒミリヰギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレヱゲゼデベペオコソトノホモヨロヲゴゾドボポ";
 
