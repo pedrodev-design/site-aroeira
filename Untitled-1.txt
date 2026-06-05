@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Aroeira Exclusive | Real Estate Elite</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Plus+Jakarta+Sans:wght@200;300;400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    referrerpolicy="no-referrer" />
+
+  <style>
+    :root {
+      --gold: #c5a07d;
+      --gold-light: #e2c7a8;
+      --bg: #030303;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      background-color: #000;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    img,
+    video {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .font-luxury {
+      font-family: 'Cinzel', serif;
+    }
+
+    #cursor-glass {
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(197, 160, 125, 0.1) 0%, transparent 70%);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(4px);
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+
+    @media (min-width:768px) {
+      #cursor-glass {
+        display: block;
+      }
+    }
+
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1000px;
+    }
+
+    .loader-content {
+      text-align: center;
+      transform-style: preserve-3d;
+    }
+
+    .luxury-btn {
+      position: relative;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1.25rem 2rem;
+      overflow: hidden;
+      transition: all .6s cubic-bezier(0.23, 1, 0.32, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+    }
+
+    .luxury-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(197, 160, 125, 0.2), transparent);
+      transition: .8s;
+    }
+
+    .luxury-btn:hover::before {
+      left: 100%;
+    }
+
+    .luxury-btn:hover {
+      background: rgba(197, 160, 125, 0.05);
+      border-color: var(--gold);
+      letter-spacing: .1em;
+      transform: scale(1.02);
+    }
+
+    .luxury-btn.gold-filled {
+      background: var(--gold);
+      color: #000;
+      border: none;
+      font-weight: 600;
+    }
+
+    .photo-container {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      transform-style: preserve-3d;
+    }
+
+    @media (max-width:420px) {
+      .photo-container {
+        width: 132px;
+        height: 132px;
+      }
+
+      #cursor-glass {
+        display: none !important;
+      }
+    }
+
+    .photo-ring {
+      position: absolute;
+      inset: -10px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      opacity: .2;
+      animation: rotateRing 20s linear infinite;
+    }
+
+    @keyframes rotateRing {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .fa-icon {
+      width: 24px;
+      height: 24px;
+      font-size: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-wrap {
+      min-height: 100svh;
+      padding: 24px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 1536px;
+      margin: 0 auto;
+    }
+
+    .max-w-smart {
+      width: 100%;
+      max-width: 28rem;
+    }
+
+    .gallery-wrap {
+      width: 100%;
+      max-width: 28rem;
+      margin-top: 2.5rem;
+    }
+
+    .gallery-card {
+      background: rgba(255, 255, 255, 0.01);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      transition: border-color .45s ease, transform .45s ease;
+    }
+
+    .gallery-card:hover {
+      border-color: rgba(197, 160, 125, 0.55);
+      transform: translateY(-2px);
+    }
+
+    .gallery-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1rem .75rem 1rem;
+    }
+
+    .gallery-title {
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      font-size: 11px;
+      opacity: .9;
+    }
+
+    .gallery-sub {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      opacity: .35;
+      margin-top: .25rem;
+    }
+
+    .gallery-toggle {
+      user-select: none;
+      cursor: pointer;
+      padding: .65rem .9rem;
+      border-radius: .9rem;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .02);
+      transition: all .45s cubic-bezier(0.23, 1, 0.32, 1);
+      font-size: 10px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .75);
+    }
+
+    .gallery-toggle:hover {
+      border-color: rgba(197, 160, 125, .65);
+      background: rgba(197, 160, 125, .06);
+      color: rgba(255, 255, 255, .9);
+    }
+
+    .gallery-body {
+      display: none;
+    }
+
+    .gallery-body.open {
+      display: block;
+    }
+
+    .gallery-grid {
+      padding: 0 1rem 1rem 1rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .75rem;
+    }
+
+    @media (min-width:768px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .thumb {
+      position: relative;
+      aspect-ratio: 1/1;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(255, 255, 255, .02);
+      cursor: pointer;
+      transition: transform .5s cubic-bezier(0.23, 1, 0.32, 1), border-color .5s ease;
+    }
+
+    .thumb:hover {
+      transform: scale(1.02);
+      border-color: rgba(197, 160, 125, .65);
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.06);
+      transition: transform .65s cubic-bezier(0.23, 1, 0.32, 1), filter .65s ease;
+      filter: saturate(1.05) contrast(1.05);
+    }
+
+    .thumb:hover img {
+      transform: scale(1.14);
+      filter: saturate(1.1) contrast(1.1);
+    }
+
+    .thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, .55) 100%);
+      opacity: .9;
+      pointer-events: none;
+    }
+
+    .thumb-badge {
+      position: absolute;
+      left: .7rem;
+      bottom: .65rem;
+      font-size: 9px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .8);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+    }
+
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, .78);
+      backdrop-filter: blur(10px);
+      padding: 1rem;
+    }
+
+    #lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-shell {
+      width: min(980px, 92vw);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(255, 255, 255, .02);
+      position: relative;
+      box-shadow: 0 0 120px rgba(197, 160, 125, .08);
+    }
+
+    .lightbox-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .8rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .lightbox-label {
+      font-size: 10px;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .65);
+    }
+
+    .lightbox-btn {
+      cursor: pointer;
+      border-radius: .9rem;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .02);
+      padding: .55rem .75rem;
+      transition: all .45s cubic-bezier(0.23, 1, 0.32, 1);
+      color: rgba(255, 255, 255, .75);
+    }
+
+    .lightbox-btn:hover {
+      border-color: rgba(197, 160, 125, .65);
+      background: rgba(197, 160, 125, .06);
+      color: rgba(255, 255, 255, .9);
+    }
+
+    .lightbox-media {
+      width: 100%;
+      height: min(70vh, 620px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, .35);
+    }
+
+    .lightbox-media img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+      padding: 0 .75rem;
+    }
+
+    .lightbox-nav .lightbox-btn {
+      pointer-events: auto;
+    }
+
+    .section-stack {
+      width: 100%;
+      max-width: 28rem;
+      margin-top: 1.25rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .lux-card {
+      background: rgba(255, 255, 255, 0.01);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      transition: border-color .45s ease, transform .45s ease;
+    }
+
+    .lux-card:hover {
+      border-color: rgba(197, 160, 125, .55);
+      transform: translateY(-2px);
+    }
+
+    .lux-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      gap: .75rem;
+    }
+
+    .lux-head .title {
+      font-size: 11px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      opacity: .9;
+    }
+
+    .lux-head .sub {
+      margin-top: .25rem;
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      opacity: .35;
+    }
+
+    .lux-body {
+      display: none;
+    }
+
+    .lux-body.open {
+      display: block;
+    }
+
+    .lux-inner {
+      padding: 0 1rem 1rem 1rem;
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .75rem;
+      margin-top: .5rem;
+    }
+
+    @media (max-width:520px) {
+      .mini-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat {
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(255, 255, 255, .02);
+      border-radius: 1rem;
+      padding: .75rem;
+      transition: border-color .45s ease, transform .45s ease;
+    }
+
+    .stat:hover {
+      border-color: rgba(197, 160, 125, .65);
+      transform: translateY(-1px);
+    }
+
+    .stat .k {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      opacity: .55;
+    }
+
+    .stat .v {
+      margin-top: .35rem;
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .9);
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+    }
+
+    .pill-list {
+      margin-top: .9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+
+    .pill {
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(255, 255, 255, .02);
+      border-radius: 999px;
+      padding: .45rem .7rem;
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .75);
+      transition: border-color .45s ease, background .45s ease, transform .45s ease;
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+    }
+
+    .pill i {
+      color: var(--gold);
+    }
+
+    .pill:hover {
+      border-color: rgba(197, 160, 125, .65);
+      background: rgba(197, 160, 125, .06);
+      transform: translateY(-1px);
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(255, 255, 255, .06);
+      margin: 1rem 0;
+    }
+
+    .mini-footer {
+      width: 100%;
+      max-width: 28rem;
+      margin-top: 1.25rem;
+      text-align: center;
+      opacity: .55;
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      padding-bottom: 24px;
+    }
+
+    .floating-wa {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 2500;
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(197, 160, 125, .95);
+      color: #000;
+      border: 1px solid rgba(255, 255, 255, .12);
+      box-shadow: 0 0 80px rgba(197, 160, 125, .18);
+      transition: transform .45s cubic-bezier(0.23, 1, 0.32, 1);
+      text-decoration: none;
+    }
+
+    .floating-wa:hover {
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .wa-pulse {
+      position: absolute;
+      inset: -10px;
+      border-radius: 999px;
+      border: 1px solid rgba(197, 160, 125, .45);
+      animation: pulse 1.8s ease-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(.9);
+        opacity: .65;
+      }
+
+      100% {
+        transform: scale(1.35);
+        opacity: 0;
+      }
+    }
+
+    .mini-actions {
+      width: 100%;
+      max-width: 28rem;
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+    }
+
+    @media (max-width:420px) {
+      .mini-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mini-btn {
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .02);
+      padding: .95rem 1rem;
+      transition: all .45s cubic-bezier(0.23, 1, 0.32, 1);
+      font-size: 10px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      cursor: pointer;
+    }
+
+    .mini-btn:hover {
+      border-color: rgba(197, 160, 125, .65);
+      background: rgba(197, 160, 125, .06);
+      color: rgba(255, 255, 255, .9);
+      transform: translateY(-1px);
+    }
+
+    .mini-btn i {
+      color: var(--gold);
+    }
+
+    /* ===========================
+       ✅ ADD: PLAYER COM BOTÃO PLAY
+    =========================== */
+    .video-shell {
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(255, 255, 255, .02);
+      border-radius: 1.25rem;
+      overflow: hidden;
+    }
+
+    .video-stage {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: rgba(0, 0, 0, .25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tour-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Overlay com botão */
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, rgba(0, 0, 0, .15) 0%, rgba(0, 0, 0, .55) 70%);
+      transition: opacity .35s ease, transform .35s ease;
+      cursor: pointer;
+    }
+
+    .video-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.02);
+    }
+
+    .play-btn {
+      width: 74px;
+      height: 74px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(197, 160, 125, .92);
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 90px rgba(197, 160, 125, .18);
+      transition: transform .35s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .video-overlay:hover .play-btn {
+      transform: scale(1.04);
+    }
+
+    .play-btn i {
+      font-size: 22px;
+    }
+
+    /* Controles pequenos abaixo */
+    .video-controls {
+      padding: .85rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      border-top: 1px solid rgba(255, 255, 255, .06);
+      flex-wrap: wrap;
+    }
+
+    .video-meta {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      opacity: .55;
+    }
+
+    .video-mini {
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+    }
+
+    .icon-btn {
+      cursor: pointer;
+      border-radius: .9rem;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .02);
+      padding: .55rem .7rem;
+      transition: all .35s cubic-bezier(0.23, 1, 0.32, 1);
+      color: rgba(255, 255, 255, .75);
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+    }
+
+    .icon-btn i {
+      color: var(--gold);
+    }
+
+    .icon-btn:hover {
+      border-color: rgba(197, 160, 125, .65);
+      background: rgba(197, 160, 125, .06);
+      color: rgba(255, 255, 255, .92);
+      transform: translateY(-1px);
+    }
+
+    /* Photo Hover Expanded View */
+    .photo-hover-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, .85);
+      backdrop-filter: blur(12px);
+      padding: 1rem;
+    }
+
+    .photo-hover-overlay.active {
+      display: flex;
+    }
+
+    .photo-expanded-shell {
+      width: min(700px, 85vw);
+      max-height: 85vh;
+      overflow: auto;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 1px solid rgba(197, 160, 125, .35);
+      background: rgba(255, 255, 255, .02);
+      position: relative;
+      box-shadow: 0 0 150px rgba(197, 160, 125, .12);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .photo-expanded-content {
+      padding: 2rem 2rem 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .photo-expanded-img {
+      width: 100%;
+      max-height: 50vh;
+      object-fit: contain;
+      border-radius: .8rem;
+      border: 1px solid rgba(197, 160, 125, .2);
+    }
+
+    .photo-expanded-label {
+      font-size: 12px;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: rgba(197, 160, 125, .9);
+      opacity: .85;
+    }
+
+    .photo-expanded-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 1rem;
+      border-radius: .8rem;
+      border: 1px solid rgba(197, 160, 125, .35);
+      background: rgba(255, 255, 255, .03);
+      color: rgba(255, 255, 255, .9);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      letter-spacing: .02em;
+      transition: all .35s cubic-bezier(0.23, 1, 0.32, 1);
+      resize: vertical;
+    }
+
+    .photo-expanded-textarea::placeholder {
+      color: rgba(255, 255, 255, .35);
+    }
+
+    .photo-expanded-textarea:focus {
+      outline: none;
+      border-color: rgba(197, 160, 125, .65);
+      background: rgba(255, 255, 255, .06);
+      box-shadow: 0 0 40px rgba(197, 160, 125, .1);
+    }
+
+    .photo-expanded-actions {
+      display: flex;
+      gap: .75rem;
+      justify-content: flex-end;
+    }
+
+    .photo-expanded-btn {
+      cursor: pointer;
+      border-radius: .8rem;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(255, 255, 255, .02);
+      padding: .65rem 1.2rem;
+      transition: all .35s cubic-bezier(0.23, 1, 0.32, 1);
+      color: rgba(255, 255, 255, .8);
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .photo-expanded-btn:hover {
+      border-color: rgba(197, 160, 125, .65);
+      background: rgba(197, 160, 125, .08);
+      color: rgba(255, 255, 255, .95);
+      transform: translateY(-1px);
+    }
+
+    .photo-expanded-btn.primary {
+      background: rgba(197, 160, 125, .9);
+      color: #000;
+      border: none;
+      font-weight: 600;
+    }
+
+    .photo-expanded-btn.primary:hover {
+      background: rgba(197, 160, 125, 1);
+      transform: translateY(-2px);
+      box-shadow: 0 0 60px rgba(197, 160, 125, .2);
+    }
+
+    @media (max-width:540px) {
+      .photo-expanded-content {
+        padding: 1.5rem 1rem 1rem 1rem;
+      }
+
+      .photo-expanded-textarea {
+        min-height: 100px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-black">
+
+
+  <!-- Estrela no Canto Superior Esquerdo -->
+  <div
+    class="fixed top-6 left-6 z-[9999] text-[#c5a07d] opacity-80 hover:opacity-100 transition-opacity duration-500 hover:scale-110 transform cursor-pointer">
+    <i class="fa-solid fa-star text-2xl drop-shadow-[0_0_12px_rgba(197,160,125,0.6)]"></i>
+  </div>
+
+
+  <!-- Estrela no Canto Superior Direito -->
+  <div
+    class="fixed top-6 right-6 z-[9999] text-[#c5a07d] opacity-80 hover:opacity-100 transition-opacity duration-500 hover:scale-110 transform cursor-pointer">
+    <i class="fa-solid fa-star text-2xl drop-shadow-[0_0_12px_rgba(197,160,125,0.6)]"></i>
+  </div>
+
+
+  <div id="cursor-glass"></div>
+
+  <div id="loader">
+    <div class="loader-content">
+      <h2 id="loader-text" class="font-luxury text-6xl md:text-9xl tracking-[1em] text-[#c5a07d] opacity-0">AROEIRA</h2>
+      <p id="loader-subtext" class="text-[10px] tracking-[2em] uppercase mt-8 opacity-0 text-white/40">Exclusividade
+        Absoluta</p>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+    <main id="app" class="relative z-10 opacity-0 px-4 xl:px-8">
+      <!-- 100% Width 3-Column Grid Layout -->
+      <div
+        class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-8 xl:gap-12 items-start justify-items-center w-full">
+
+        <!-- Left Column: Casa à Venda -->
+        <div class="w-full max-w-sm order-2 xl:order-1 xl:sticky xl:top-12 mt-8 xl:mt-32">
+          <section
+            class="lux-card flex flex-col h-full bg-white/5 !border-[#c5a07d]/20 shadow-[0_0_80px_rgba(197,160,125,0.06)]">
+            <div class="lux-head">
+              <div>
+                <div class="title font-luxury text-white">Nova Residência</div>
+                <div class="sub">Mansão Contemporânea</div>
+              </div>
+              <div class="pill border border-[#c5a07d]/30 text-xs px-2 py-1 bg-[#c5a07d]/10"><i class="fa-solid fa-key"
+                  style="color: var(--gold);"></i> Venda</div>
+            </div>
+            <div class="flex-grow p-5 pt-0 flex flex-col gap-5">
+              <div class="w-full aspect-[4/3] rounded-xl overflow-hidden border border-white/10 relative">
+                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=800"
+                  alt="Casa Nova" class="w-full h-full object-cover rounded-xl hover:scale-105 transition duration-700">
+              </div>
+              <div class="grid grid-cols-3 gap-3">
+                <div class="stat !p-3 text-center flex flex-col justify-center gap-1 border-white/5">
+                  <div class="k !text-[9px]">Área</div>
+                  <div class="v justify-center text-[10px]"><i class="fa-solid fa-ruler-combined text-[#c5a07d]"></i>
+                    600m²</div>
+                </div>
+                <div class="stat !p-3 text-center flex flex-col justify-center gap-1 border-white/5">
+                  <div class="k !text-[9px]">Suítes</div>
+                  <div class="v justify-center text-[10px]"><i class="fa-solid fa-bed text-[#c5a07d]"></i> 4</div>
+                </div>
+                <div class="stat !p-3 text-center flex flex-col justify-center gap-1 border-white/5">
+                  <div class="k !text-[9px]">Vagas</div>
+                  <div class="v justify-center text-[10px]"><i class="fa-solid fa-car text-[#c5a07d]"></i> 3</div>
+                </div>
+              </div>
+              <div class="text-xs leading-relaxed opacity-70 mt-1">
+                Residência de alto padrão com acabamentos exclusivos, home theater, piscina de borda infinita e
+                integração total. (Dados genéricos, substituir depois)
+              </div>
+              <a href="#"
+                class="mt-auto luxury-btn gold-filled flex items-center justify-center group !py-3.5 !rounded-xl">
+                <span class="text-[11px] tracking-widest uppercase font-semibold"><i
+                    class="fa-solid fa-arrow-right mr-2 text-black"></i> Ver Detalhes</span>
+              </a>
+            </div>
+          </section>
+        </div>
+
+        <!-- Center Column -->
+        <div id="tilt-container" class="w-full max-w-lg flex flex-col items-center order-1 xl:order-2 z-10 w-full">
+
+          <div class="photo-container mb-10 md:mb-12">
+            <div class="photo-ring"></div>
+            <div class="photo-ring" style="animation-direction: reverse; inset: -20px; opacity: 0.1;"></div>
+            <div
+              class="w-full h-full rounded-full overflow-hidden border-2 border-white/10 shadow-[0_0_80px_rgba(197,160,125,0.2)]">
+              <video src="robo-site.mp4" autoplay loop muted playsinline class="w-full h-full object-cover"></video>
+            </div>
+          </div>
+
+          <div class="text-center mb-10 md:mb-16">
+            <h1
+              class="font-luxury text-2xl sm:text-3xl md:text-4xl tracking-[0.35em] md:tracking-[0.4em] uppercase mb-4 text-white flex items-center justify-center gap-3">
+              Estância Aroeira <div class="w-4 h-4 bg-blue-500 shrink-0"></div>
+            </h1>
+            <div class="flex items-center justify-center gap-4 opacity-40">
+              <span class="h-[1px] w-8 bg-white"></span>
+              <p class="text-[10px] tracking-[0.5em] uppercase">Private Advisor</p>
+              <span class="h-[1px] w-8 bg-white"></span>
+            </div>
+          </div>
+
+          <div class="w-full space-y-5 md:space-y-6 max-w-sm max-w-smart">
+            <a href="https://wa.me/6294514112?text=Ol%C3%A1%2C%20vi%20o%20an%C3%BAncio%20de%20um%20lote%20localizado%20em%20Trindade"
+              target="_blank" class="luxury-btn gold-filled flex items-center justify-between group">
+              <span class="text-[11px] sm:text-[12px] tracking-widest uppercase">
+                <i class="fa-brands fa-whatsapp fa-icon mr-2"></i> Consultoria WhatsApp
+              </span>
+            </a>
+
+            <a href="https://www.instagram.com/lia121518virtual/"
+              class="luxury-btn flex items-center justify-between group">
+              <span class="text-[10px] sm:text-[11px] tracking-widest uppercase text-white/80">
+                <i class="fa-brands fa-instagram fa-icon mr-2 text-[#c5a07d]"></i> Galeria Instagram
+              </span>
+            </a>
+
+            <a href="https://www.google.com/maps/place/From+condo+Farms+Resort+Aroeira/@-16.6124284,-49.4115348,17z/data=!3m1!4b1!4m6!3m5!1s0x935e60f4e4e1d583:0x26b0f1c3fa037916!8m2!3d-16.6124284!4d-49.4089599!16s%2Fg%2F11b8_jjk8k?entry=ttu&g_ep=EgoyMDI2MDEyOC4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank" class="luxury-btn flex items-center justify-between group">
+              <span class="text-[10px] sm:text-[11px] tracking-widest uppercase text-white/80">
+                <i class="fa-solid fa-location-dot fa-icon mr-2 text-[#c5a07d]"></i> Localização Privilegiada
+              </span>
+              <i class="fa-solid fa-map-location-dot fa-icon text-[#c5a07d]"></i>
+            </a>
+
+            <!-- DOCUMENTOS -->
+            <a href="https://drive.google.com/drive/folders/18Iktw-iAznomKcvzRLYkuuWfrWIkvtQs?usp=drive_link"
+              target="_blank" class="luxury-btn flex items-center justify-between group">
+              <span class="text-[10px] sm:text-[11px] tracking-widest uppercase text-white/80">
+                <i class="fa-solid fa-file-alt fa-icon mr-2 text-[#c5a07d]"></i> Documentos
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square fa-icon text-[#c5a07d]"></i>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/18Iktw-iAznomKcvzRLYkuuWfrWIkvtQs?usp=drive_link"
+              target="_blank" class="luxury-btn flex items-center justify-between group">
+              <span class="text-[10px] sm:text-[11px] tracking-widest uppercase text-white/80">
+                <i class="fa-solid fa-file-alt fa-icon mr-2 text-[#c5a07d]"></i> Documentos
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square fa-icon text-[#c5a07d]"></i>
+            </a>
+          </div>
+
+
+          <div class="mini-actions max-w-smart">
+            <button class="mini-btn" id="openAll" type="button"><i class="fa-solid fa-wand-magic-sparkles"></i>
+              Expandir</button>
+            <button class="mini-btn" id="copyLink" type="button"><i class="fa-solid fa-link"></i> Copiar Link</button>
+          </div>
+
+          <section class="gallery-wrap max-w-smart">
+            <div class="gallery-card">
+              <div class="gallery-header">
+                <div>
+                  <div class="gallery-title font-luxury text-white">Galeria</div>
+                  <div class="gallery-sub">Fotos reais do lote</div>
+                </div>
+                <button id="galleryToggle" class="gallery-toggle" type="button">
+                  <i class="fa-regular fa-images mr-2" style="color: var(--gold);"></i> Abrir
+                </button>
+              </div>
+              <!-- GALERIA DE FOTOS-->
+              <div id="galleryBody" class="gallery-body">
+                <div class="gallery-grid">
+                  <div class="thumb" data-full="/img/1.jpg" data-label="Vista aérea">
+                    <img src="/img/1.jpg" alt="Vista aérea">
+                    <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
+                  </div>
+                  <div class="thumb" data-full="/img/2.jpg" data-label="Área do lote">
+                    <img src="/img/2.jpg" alt="Área do lote">
+                    <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
+                  </div>
+                  <div class="thumb" data-full="/img/3.jpg" data-label="Entrada">
+                    <img src="/img/3.jpg" alt="Entrada">
+                    <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
+                  </div>
+                  <div class="thumb" data-full="/img/4.jpg" data-label="Panorama">
+                    <img src="/img/4.jpg" alt="Panorama">
+                    <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
+                  </div>
+                  <div class="thumb" data-full="/img/5.jpg" data-label="Noite">
+                    <img src="/img/5.jpg" alt="Noite">
+                    <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
+                  </div>
+                  <div class="thumb" data-full="/img/6.jpg" data-label="Detalhe">
+                    <img src="/img/6.jpg" alt="Detalhe">
+                    <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
+                  </div>
+
+                  <div class="thumb" data-full="/img/arara.jpg" data-label="Arara">
+                    <img src="/img/arara.jpg" alt="Arara">
+                    <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
+                  </div>
+
+                  <div class="thumb" data-full="/img/8.jpg" data-label="Detalhe">
+                    <img src="/img/8.jpg" alt="Detalhe">
+                    <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
+                  </div>
+
+                  <div class="thumb" data-full="/img/9.jpg" data-label="Detalhe">
+                    <img src="/img/9.jpg" alt="Detalhe">
+                    <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
+                  </div>
+
+                  <div class="thumb" data-full="/img/9.jpg" data-label="Detalhe">
+                    <img src="/img/10.jpg" alt="Detalhe">
+                    <div class="thumb-badge"><i class="fa-solid fa-expand"></i> Ver</div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div class="section-stack max-w-smart">
+
+            <section class="lux-card" data-panel="specs">
+              <div class="lux-head">
+                <div>
+                  <div class="title font-luxury text-white">Destaques</div>
+                  <div class="sub">O que importa de verdade</div>
+                </div>
+                <button class="gallery-toggle js-toggle" type="button" data-target="#specsBody">
+                  <i class="fa-solid fa-crown mr-2" style="color: var(--gold);"></i> Abrir
+                </button>
+              </div>
+
+              <div id="specsBody" class="lux-body">
+                <div class="lux-inner">
+                  <div class="mini-stats">
+                    <div class="stat">
+                      <div class="k">Área</div>
+                      <div class="v"><i class="fa-solid fa-ruler-combined" style="color:var(--gold)"></i> 4.000 m²</div>
+                    </div>
+                    <div class="stat">
+                      <div class="k">Posição</div>
+                      <div class="v"><i class="fa-solid fa-diamond" style="color:var(--gold)"></i> Esquina</div>
+                    </div>
+                    <div class="stat">
+                      <div class="k">Perfil</div>
+                      <div class="v"><i class="fa-solid fa-shield-halved" style="color:var(--gold)"></i> Privado</div>
+                    </div>
+                  </div>
+
+                  <div class="pill-list">
+                    <div class="pill"><i class="fa-solid fa-road"></i> Asfalto</div>
+                    <div class="pill"><i class="fa-solid fa-people-roof"></i> Ambiente familiar</div>
+                    <div class="pill"><i class="fa-solid fa-trash"></i> Coleta de lixo</div>
+                    <div class="pill"><i class="fa-solid fa-tree"></i> Natureza</div>
+                    <div class="pill"><i class="fa-solid fa-user-shield"></i> Portaria</div>
+                    <div class="pill"><i class="fa-solid fa-location-crosshairs"></i> Acesso fácil</div>
+                  </div>
+
+                  <div class="divider"></div>
+
+                  <div style="opacity:.8; font-size:12px; line-height:1.7;">
+                    Um lote grande, de esquina, em condomínio estruturado. O tipo de oportunidade que não aparece todo
+                    dia
+                    —
+                    e quando aparece, some rápido (como tudo que é bom… e raro).
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ✅ TOUR: vídeo normal com botão PLAY -->
+            <section class="lux-card" data-panel="tour">
+              <div class="lux-head">
+                <div>
+                  <div class="title font-luxury text-white">Vídeos</div>
+                  <div class="sub">Vídeo + mapa rápido</div>
+                </div>
+                <button class="gallery-toggle js-toggle" type="button" data-target="#tourBody">
+                  <i class="fa-solid fa-film mr-2" style="color: var(--gold);"></i> Abrir
+                </button>
+              </div>
+
+              <div id="tourBody" class="lux-body">
+                <div class="lux-inner">
+
+                  <div class="video-shell">
+                    <div
+                      style="padding: .9rem 1rem; border-bottom:1px solid rgba(255,255,255,.06); display:flex; justify-content:space-between; align-items:center; gap:.75rem; flex-wrap:wrap;">
+                      <div style="font-size:10px; letter-spacing:.35em; text-transform:uppercase; opacity:.65;">Vídeo do
+                        lote</div>
+                      <div style="font-size:10px; letter-spacing:.35em; text-transform:uppercase; opacity:.35;">clique
+                        para iniciar</div>
+                    </div>
+
+                    <div class="video-stage">
+                      <!-- ✅ seu vídeo normal -->
+                      <video id="tourVideo" class="tour-video" src="/videos/1.mp4" preload="metadata"
+                        playsinline></video>
+
+                      <!-- ✅ overlay com botão play -->
+                      <div id="videoOverlay" class="video-overlay" role="button" aria-label="Reproduzir vídeo"
+                        tabindex="0">
+                        <div class="play-btn">
+                          <i class="fa-solid fa-play"></i>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="video-controls">
+                      <div class="video-meta" id="videoMeta">Tour • Estância Aroeira</div>
+                      <div class="video-mini">
+                        <button id="btnPlayPause" class="icon-btn" type="button">
+                          <i class="fa-solid fa-play"></i> Play
+                        </button>
+                        <button id="btnMute" class="icon-btn" type="button">
+                          <i class="fa-solid fa-volume-xmark"></i> Mute
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- vídeo selector -->
+                    <div class="video-selector flex gap-2 mt-2" id="videoSelector">
+                      <button class="icon-btn video-switch" data-src="/videos/1.mp4" data-label="1">1</button>
+                      <button class="icon-btn video-switch" data-src="/videos/2.mp4" data-label="2">2</button>
+                      <button class="icon-btn video-switch" data-src="/videos/3.mp4" data-label="3">3</button>
+                    </div>
+
+                  </div>
+
+                  <div class="divider"></div>
+
+                  <a class="luxury-btn flex items-center justify-between group" style="padding: 1rem 1rem;"
+                    target="_blank"
+                    href="https://www.google.com/maps/place/From+condo+Farms+Resort+Aroeira/@-16.6124284,-49.4115348,17z/">
+                    <span class="text-[11px] tracking-widest uppercase text-white/80">
+                      <i class="fa-solid fa-map mr-2" style="color:var(--gold)"></i>
+                      Abrir rota no Google Maps
+                    </span>
+                    <i class="fa-solid fa-arrow-up-right-from-square" style="color:var(--gold)"></i>
+                  </a>
+
+                </div>
+              </div>
+            </section>
+
+          </div>
+
+          <!-- Refactored layout, elements moved to side columns -->
+
+          <div class="mini-footer max-w-smart">
+            Estância Aroeira • Experiência Privada • Trindade/GO
+          </div>
+
+        </div> <!-- Fim Center Column -->
+
+        <!-- Right Column: Podcast Tattoo -->
+        <div class="w-full max-w-sm order-3 xl:sticky xl:top-12 mt-8 xl:mt-32">
+          <section
+            class="lux-card flex flex-col h-full bg-white/5 !border-[#c5a07d]/20 shadow-[0_0_80px_rgba(197,160,125,0.06)]">
+            <div class="lux-head">
+              <div>
+                <div class="title font-luxury text-white">Aroeira Cast</div>
+                <div class="sub">Tattoo Studio Edition</div>
+              </div>
+              <div class="pill border border-[#c5a07d]/30 text-xs px-2 py-1 bg-[#c5a07d]/10"><i
+                  class="fa-solid fa-microphone" style="color: var(--gold);"></i> #Ep 42</div>
+            </div>
+            <div class="flex-grow p-5 pt-0 flex flex-col gap-5">
+              <div
+                class="w-full aspect-[4/3] rounded-xl overflow-hidden border border-white/10 relative group cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&fit=crop&q=80&w=800"
+                  alt="Podcast Tattoo Studio"
+                  class="w-full h-full object-cover rounded-xl group-hover:scale-105 transition duration-700 filter brightness-75">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div
+                    class="w-16 h-16 rounded-full bg-[#c5a07d] flex items-center justify-center text-black border-[3px] border-white/20 shadow-[0_0_40px_rgba(197,160,125,0.5)] transition duration-500 group-hover:scale-110">
+                    <i class="fa-solid fa-play text-2xl ml-1"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="pill-list !mt-0 justify-center">
+                <div class="pill !text-[9px] !px-3 !py-1.5"><i class="fa-solid fa-hashtag text-[#c5a07d]"></i> Arte
+                </div>
+                <div class="pill !text-[9px] !px-3 !py-1.5"><i class="fa-solid fa-hashtag text-[#c5a07d]"></i> Cultura
+                </div>
+                <div class="pill !text-[9px] !px-3 !py-1.5"><i class="fa-solid fa-hashtag text-[#c5a07d]"></i> Lifestyle
+                </div>
+              </div>
+              <div class="text-xs leading-relaxed opacity-70 mt-1">
+                Bate-papo exclusivo gravado direto do estúdio de tatuagem. Relatos sobre exclusividade, arte na pele e
+                mercado imobiliário. (Dados genéricos)
+              </div>
+              <a href="#" class="mt-auto luxury-btn flex items-center justify-center group !py-3.5 !rounded-xl">
+                <span class="text-[11px] tracking-widest uppercase text-white/80"><i
+                    class="fa-brands fa-youtube mr-2 text-[#c5a07d]"></i> Assistir Episódio</span>
+              </a>
+            </div>
+          </section>
+        </div>
+
+      </div> <!-- Fim 3-Column Layout Grid -->
+    </main>
+  </div>
+
+  <!-- Photo Expand on Hover Modal -->
+  <div id="photoHoverOverlay" class="photo-hover-overlay">
+    <div class="photo-expanded-shell">
+      <div class="photo-expanded-content">
+        <img id="photoHoverImg" class="photo-expanded-img" src="" alt="Foto ampliada">
+        <div id="photoHoverLabel" class="photo-expanded-label">Foto</div>
+        <textarea id="photoHoverNote" class="photo-expanded-textarea"
+          placeholder="Escreva algo sobre esta foto..."></textarea>
+        <div class="photo-expanded-actions">
+          <button id="photoHoverClose" class="photo-expanded-btn" type="button">Fechar</button>
+          <button id="photoHoverSave" class="photo-expanded-btn primary" type="button">
+            <i class="fa-solid fa-floppy-disk mr-2" style="color:inherit;"></i> Salvar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="lightbox" aria-hidden="true">
+    <div class="lightbox-shell">
+      <div class="lightbox-topbar">
+        <div id="lightboxLabel" class="lightbox-label">Galeria</div>
+        <div class="flex items-center gap-2">
+          <!-- Botão para comentar na foto atualmente aberta no lightbox -->
+          <button id="lightboxCommentBtn" class="lightbox-btn" type="button" aria-label="Comentar"
+            title="Adicionar Comentários" style="color:var(--gold); border-color:var(--gold);">
+            <i class="fa-solid fa-comment-dots mr-1"></i> Comentar
+          </button>
+          <button id="lightboxClose" class="lightbox-btn" type="button" aria-label="Fechar">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="lightbox-media">
+        <img id="lightboxImg" src="" alt="Imagem ampliada">
+      </div>
+
+      <div class="lightbox-nav">
+        <button id="lightboxPrev" class="lightbox-btn" type="button" aria-label="Anterior">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button id="lightboxNext" class="lightbox-btn" type="button" aria-label="Próxima">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <a class="floating-wa" href="https://wa.me/6294514112?text=Ol%C3%A1%2C%20Quer%20saber%20mais%3F" target="_blank"
+    aria-label="WhatsApp">
+    <span class="wa-pulse"></span>
+    <i class="fa-brands fa-whatsapp" style="font-size:24px;"></i>
+  </a>
+
+  <!-- áudio de boas-vindas (toca uma vez na carga da página) -->
+  <!-- arquivo existente: fala-inicio.mp3 na raiz -->
+  <audio id="bgAudio" src="/fala-inicio.mp3" preload="auto" autoplay></audio>
+
+  <script>
+
+    // Tilt só em desktop
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
+    const container = document.getElementById('tilt-container');
+    if (isDesktop) {
+      window.addEventListener('mousemove', (e) => {
+        const x = (window.innerWidth / 2 - e.clientX) / 50;
+        const y = (window.innerHeight / 2 - e.clientY) / 50;
+        gsap.to(container, { rotationY: x, rotationX: -y, duration: 1, ease: "power2.out" });
+      });
+    }
+
+    // Loader
+    window.addEventListener('load', () => {
+      // toca áudio uma vez no carregamento; navegadores podem bloquear se não houver interação do usuário
+      const bgAudio = document.getElementById('bgAudio');
+      if (bgAudio) {
+        bgAudio.play().catch(() => { });
+      }
+
+      const tl = gsap.timeline();
+      tl.to("#loader-text", { opacity: 1, scale: 1.2, duration: 2, letterSpacing: "0.2em", ease: "power4.inOut" })
+        .to("#loader-subtext", { opacity: 1, duration: 1 }, "-=1")
+        .to("#loader-text", { scale: 5, opacity: 0, filter: "blur(20px)", duration: 1.5, ease: "power2.in" })
+        .to("#loader", { opacity: 0, pointerEvents: "none", duration: 1 }, "-=0.5")
+        .to("#app", { opacity: 1, y: 0, duration: 1.2, ease: "expo.out" }, "-=0.5");
+    });
+
+    // fallback: se o áudio ainda não tocou, inicia na primeira interação do usuário
+    (function () {
+      const bgAudio = document.getElementById('bgAudio');
+      let attempted = false;
+      function tryPlay() {
+        if (attempted || !bgAudio) return;
+        attempted = true;
+        bgAudio.play().catch(() => { });
+        document.removeEventListener('click', tryPlay);
+        document.removeEventListener('keydown', tryPlay);
+        document.removeEventListener('touchstart', tryPlay);
+      }
+      document.addEventListener('click', tryPlay);
+      document.addEventListener('keydown', tryPlay);
+      document.addEventListener('touchstart', tryPlay);
+    })();
+
+    // Galeria toggle
+    const galleryToggle = document.getElementById('galleryToggle');
+    const galleryBody = document.getElementById('galleryBody');
+    galleryToggle?.addEventListener('click', () => {
+      const isOpen = galleryBody.classList.toggle('open');
+      galleryToggle.innerHTML = `<i class="fa-regular fa-images mr-2" style="color: var(--gold);"></i>${isOpen ? 'Fechar' : 'Abrir'}`;
+      if (isOpen) gsap.fromTo("#galleryBody", { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .35, ease: "power2.out" });
+    });
+
+    // Lightbox
+    const thumbs = Array.from(document.querySelectorAll('.thumb'));
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
+    const lightboxLabel = document.getElementById('lightboxLabel');
+    let currentIndex = 0;
+
+    function openLightbox(index) {
+      currentIndex = index;
+      const item = thumbs[currentIndex];
+      const src = item.getAttribute('data-full') || item.querySelector('img')?.src;
+      const label = item.getAttribute('data-label') || 'Galeria';
+      if (lightboxImg) lightboxImg.src = src;
+      if (lightboxLabel) lightboxLabel.textContent = label;
+      lightbox?.classList.add('open');
+      lightbox?.setAttribute('aria-hidden', 'false');
+      gsap.fromTo(".lightbox-shell", { opacity: 0, y: 14, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" });
+    }
+
+    function closeLightbox() {
+      if (!lightbox?.classList.contains('open')) return;
+      gsap.to(".lightbox-shell", {
+        opacity: 0, y: 10, scale: 0.99, duration: 0.35, ease: "power2.in",
+        onComplete: () => {
+          lightbox.classList.remove('open');
+          lightbox.setAttribute('aria-hidden', 'true');
+          if (lightboxImg) lightboxImg.src = '';
+        }
+      });
+    }
+
+    function nav(delta) {
+      currentIndex = (currentIndex + delta + thumbs.length) % thumbs.length;
+      const item = thumbs[currentIndex];
+      const src = item.getAttribute('data-full') || item.querySelector('img')?.src;
+      const label = item.getAttribute('data-label') || 'Galeria';
+      if (lightboxImg) lightboxImg.src = src;
+      if (lightboxLabel) lightboxLabel.textContent = label;
+      gsap.fromTo("#lightboxImg", { opacity: 0, scale: 0.995 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" });
+    }
+
+    thumbs.forEach((t, i) => t.addEventListener('click', () => openLightbox(i)));
+    lightboxClose?.addEventListener('click', closeLightbox);
+
+    // Evento para abrir o overlay de comentários a partir do lightbox atual
+    document.getElementById('lightboxCommentBtn')?.addEventListener('click', () => {
+      openPhotoHover(currentIndex);
+    });
+    lightboxPrev?.addEventListener('click', () => nav(-1));
+    lightboxNext?.addEventListener('click', () => nav(1));
+    lightbox?.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+    window.addEventListener('keydown', (e) => {
+      if (!lightbox?.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') nav(-1);
+      if (e.key === 'ArrowRight') nav(1);
+    });
+
+    // ===========================
+    // Photo Hover Expand Modal
+    // ===========================
+    const photoHoverOverlay = document.getElementById('photoHoverOverlay');
+    const photoHoverImg = document.getElementById('photoHoverImg');
+    const photoHoverLabel = document.getElementById('photoHoverLabel');
+    const photoHoverNote = document.getElementById('photoHoverNote');
+    const photoHoverClose = document.getElementById('photoHoverClose');
+    const photoHoverSave = document.getElementById('photoHoverSave');
+
+    function savePhotoNote(photoIndex) {
+      const notes = JSON.parse(localStorage.getItem('photoNotes') || '{}');
+      const photoPath = thumbs[photoIndex]?.getAttribute('data-full') || '';
+      notes[photoPath] = photoHoverNote.value;
+      localStorage.setItem('photoNotes', JSON.stringify(notes));
+    }
+
+    function loadPhotoNote(photoIndex) {
+      const notes = JSON.parse(localStorage.getItem('photoNotes') || '{}');
+      const photoPath = thumbs[photoIndex]?.getAttribute('data-full') || '';
+      photoHoverNote.value = notes[photoPath] || '';
+    }
+
+    function openPhotoHover(index) {
+      const item = thumbs[index];
+      const src = item.getAttribute('data-full') || item.querySelector('img')?.src;
+      const label = item.getAttribute('data-label') || 'Galeria';
+
+      if (photoHoverImg) photoHoverImg.src = src;
+      if (photoHoverLabel) photoHoverLabel.textContent = label;
+
+      loadPhotoNote(index);
+
+      photoHoverOverlay?.classList.add('active');
+      gsap.fromTo(".photo-expanded-shell", { opacity: 0, y: 20, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power3.out" });
+
+      // Focus no textarea automaticamente
+      photoHoverNote?.focus();
+
+      // Guardar o índice da foto atual para salvar depois
+      photoHoverOverlay._currentIndex = index;
+    }
+
+    function closePhotoHover() {
+      if (!photoHoverOverlay?.classList.contains('active')) return;
+      gsap.to(".photo-expanded-shell", {
+        opacity: 0, y: 14, scale: 0.95, duration: 0.35, ease: "power2.in",
+        onComplete: () => {
+          photoHoverOverlay.classList.remove('active');
+          if (photoHoverImg) photoHoverImg.src = '';
+        }
+      });
+    }
+
+    // Event listeners para foto hover
+    // O problema de "flicker" e fotos piscando foi resolvido
+    // removendo o evento 'mouseenter' / 'mouseleave' que abria o modal fullscreen,
+    // o qual causava imediatamente um 'mouseleave' na foto, fechando o modal
+    // em um loop infinito que fazia a tela piscar repetidamente e descontroladamente.
+
+    // Event listeners para os botões do modal hover
+    photoHoverClose?.addEventListener('click', closePhotoHover);
+    photoHoverSave?.addEventListener('click', () => {
+      if (photoHoverOverlay._currentIndex !== undefined) {
+        savePhotoNote(photoHoverOverlay._currentIndex);
+
+        // Animação de confirmação
+        const originalHTML = photoHoverSave.innerHTML;
+        photoHoverSave.innerHTML = '<i class="fa-solid fa-check mr-2" style="color:inherit;"></i> Salvo!';
+        photoHoverSave.style.borderColor = 'rgba(197,160,125,.9)';
+        photoHoverSave.style.color = '#fff';
+
+        setTimeout(() => {
+          photoHoverSave.innerHTML = originalHTML;
+          photoHoverSave.style.borderColor = '';
+          photoHoverSave.style.color = '';
+        }, 1500);
+      }
+    });
+
+    // Fechar quando clicar no overlay
+    photoHoverOverlay?.addEventListener('click', (e) => {
+      if (e.target === photoHoverOverlay) closePhotoHover();
+    });
+
+    // Fechar com ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && photoHoverOverlay?.classList.contains('active')) {
+        closePhotoHover();
+      }
+    });
+
+    // Pausar o hover quando o modal hover está aberto (para não interferir)
+    photoHoverNote?.addEventListener('mouseenter', (e) => {
+      e.stopPropagation();
+    });
+
+    // Painéis
+    document.querySelectorAll('.js-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetSel = btn.getAttribute('data-target');
+        const bodyEl = document.querySelector(targetSel);
+        if (!bodyEl) return;
+        const isOpen = bodyEl.classList.toggle('open');
+        const icon = btn.querySelector('i')?.outerHTML || '';
+        btn.innerHTML = `${icon} ${isOpen ? 'Fechar' : 'Abrir'}`;
+        if (isOpen) gsap.fromTo(bodyEl, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: .35, ease: "power2.out" });
+      });
+    });
+
+    // Expandir tudo
+    const openAllBtn = document.getElementById('openAll');
+    openAllBtn?.addEventListener('click', () => {
+      if (galleryBody && !galleryBody.classList.contains('open')) {
+        galleryBody.classList.add('open');
+        galleryToggle.innerHTML = `<i class="fa-regular fa-images mr-2" style="color: var(--gold);"></i> Fechar`;
+      }
+      document.querySelectorAll('.lux-body').forEach(body => body.classList.add('open'));
+      document.querySelectorAll('.js-toggle').forEach(btn => {
+        const i = btn.querySelector('i')?.outerHTML || '';
+        btn.innerHTML = `${i} Fechar`;
+      });
+      gsap.fromTo("#app", { opacity: 0.9, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" });
+      document.querySelector('.gallery-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // Copiar link
+    const copyBtn = document.getElementById('copyLink');
+    copyBtn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        copyBtn.innerHTML = `<i class="fa-solid fa-check"></i> Copiado`;
+        setTimeout(() => copyBtn.innerHTML = `<i class="fa-solid fa-link"></i> Copiar Link`, 1200);
+      } catch (e) {
+        const temp = document.createElement('input');
+        temp.value = window.location.href;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        copyBtn.innerHTML = `<i class="fa-solid fa-check"></i> Copiado`;
+        setTimeout(() => copyBtn.innerHTML = `<i class="fa-solid fa-link"></i> Copiar Link`, 1200);
+      }
+    });
+
+    /* ===========================
+       ✅ PLAYER: play overlay + play/pause + mute
+    =========================== */
+    const tourVideo = document.getElementById('tourVideo');
+    const overlay = document.getElementById('videoOverlay');
+    const btnPlayPause = document.getElementById('btnPlayPause');
+    const btnMute = document.getElementById('btnMute');
+    const videoMeta = document.getElementById('videoMeta');
+    const videoSelector = document.getElementById('videoSelector');
+
+    function setPlayUI(isPlaying) {
+      if (!btnPlayPause) return;
+      btnPlayPause.innerHTML = isPlaying
+        ? `<i class="fa-solid fa-pause"></i> Pause`
+        : `<i class="fa-solid fa-play"></i> Play`;
+      if (overlay) overlay.classList.toggle('hidden', isPlaying);
+    }
+
+    async function playVideo() {
+      if (!tourVideo) return;
+      try {
+        await tourVideo.play();
+        setPlayUI(true);
+      } catch (err) {
+        // se o navegador bloquear, deixa overlay visível
+        setPlayUI(false);
+      }
+    }
+
+    function pauseVideo() {
+      if (!tourVideo) return;
+      tourVideo.pause();
+      setPlayUI(false);
+    }
+
+    function switchVideo(src, label, buttonElement) {
+      if (!tourVideo) return;
+      const wasPlaying = !tourVideo.paused;
+      tourVideo.pause();
+      tourVideo.src = src;
+      tourVideo.load();
+      if (videoMeta) videoMeta.textContent = `Tour ${label} • Estância Aroeira`;
+      setPlayUI(false);
+      // update active state on buttons
+      if (videoSelector) {
+        videoSelector.querySelectorAll('.video-switch').forEach(b => b.classList.remove('bg-[#c5a07d]', 'text-black'));
+      }
+      if (buttonElement) {
+        buttonElement.classList.add('bg-[#c5a07d]', 'text-black');
+      }
+      if (wasPlaying) playVideo();
+    }
+
+    overlay?.addEventListener('click', playVideo);
+    overlay?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') playVideo();
+    });
+
+    btnPlayPause?.addEventListener('click', () => {
+      if (!tourVideo) return;
+      if (tourVideo.paused) playVideo();
+      else pauseVideo();
+    });
+
+    btnMute?.addEventListener('click', () => {
+      if (!tourVideo) return;
+      tourVideo.muted = !tourVideo.muted;
+      btnMute.innerHTML = tourVideo.muted
+        ? `<i class="fa-solid fa-volume-xmark"></i> Mute`
+        : `<i class="fa-solid fa-volume-high"></i> Som`;
+    });
+
+    // handle selector buttons
+    videoSelector?.querySelectorAll('.video-switch').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const src = btn.getAttribute('data-src');
+        const label = btn.getAttribute('data-label') || '';
+        if (src) switchVideo(src, label, btn);
+      });
+    });
+
+    // mark first button active on load
+    if (videoSelector) {
+      const first = videoSelector.querySelector('.video-switch');
+      if (first) first.classList.add('bg-[#c5a07d]', 'text-black');
+    }
+
+    tourVideo?.addEventListener('ended', () => setPlayUI(false));
+    tourVideo?.addEventListener('pause', () => setPlayUI(false));
+    tourVideo?.addEventListener('play', () => setPlayUI(true));
+  </script>
+</body>
+
+</html>
+
