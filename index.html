@@ -2325,8 +2325,6 @@
       <i class="fa-brands fa-whatsapp" style="font-size: 24px"></i>
     </a>
 
-    <audio id="welcome-audio" src="mulher-falando.mp3" preload="auto"></audio>
-
     <!-- áudio de boas-vindas (toca uma vez na carga da página) -->
     <!-- arquivo existente: fala-inicio.mp3 na raiz -->
     <!-- áudio de boas-vindas removido conforme pedido -->
@@ -3183,9 +3181,6 @@
           });
 
         document.getElementById("btn-start").addEventListener("click", () => {
-          const audio = document.getElementById("welcome-audio");
-          if (audio) audio.play();
-
           gsap
             .timeline()
             .to("#loader-text", {
